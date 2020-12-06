@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EsqueciMinhaSenha">
+        <activity android:name=".UI.Activity.CadastrarCartaoActivity"></activity>
         <activity android:name=".UI.Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

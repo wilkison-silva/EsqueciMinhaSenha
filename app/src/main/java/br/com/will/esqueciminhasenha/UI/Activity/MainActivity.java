@@ -2,6 +2,7 @@ package br.com.will.esqueciminhasenha.UI.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -39,8 +40,12 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                        .setAction("Action", null).show();*/
+
+                Intent intent = new Intent(MainActivity.this, CadastrarCartaoActivity.class);
+                startActivity(intent);
             }
         });
 
