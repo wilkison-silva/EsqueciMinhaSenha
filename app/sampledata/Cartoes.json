@@ -1,0 +1,47 @@
+{
+  "cartoes":[
+    {
+      "descricao" : "Facebook",
+      "categoria" : "redes sociais",
+      "login" : "seiya_martins@hotmail.com",
+      "senha" : "91952205e72",
+      "cor" : "#87CEFA"
+    },
+    {
+      "descricao" : "Mercado Livre",
+      "categoria" : "site de compras",
+      "login" : "wilkisonmartinsdasilva@gmail.com",
+      "senha" : "91952205e72",
+      "cor" : "#00FFFF"
+    },
+    {
+      "descricao" : "Instagram",
+      "categoria" : "redes sociais",
+      "login" : "wilkisonmartinsdasilva@gmail.com",
+      "senha" : "91952205e72",
+      "cor" : "#006400"
+    },
+    {
+      "descricao" : "Alura",
+      "categoria" : "Site de educação",
+      "login" : "wilkisonmartinsdasilva@gmail.com",
+      "senha" : "91952205e72",
+      "cor" : "#87CEFA"
+    },
+    {
+      "descricao" : "Spotify",
+      "categoria" : "Streaming",
+      "login" : "wilkisonmartinsdasilva@gmail.com",
+      "senha" : "91952205e72",
+      "cor" : "#8B4513"
+    },
+    {
+      "descricao" : "Facebook",
+      "categoria" : "redes sociais",
+      "login" : "seiya_martins@hotmail.com",
+      "senha" : "91952205e72",
+      "cor" : "#FF1493"
+    }
+  ]
+
+}
