@@ -5,6 +5,8 @@
     android:id="@+id/listview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".UI.Activity.MainActivity">
 
 
@@ -13,24 +15,43 @@
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:background="#FFFFFF"
+        android:backgroundTint="@color/design_default_color_primary_variant"
         app:layout_constraintBottom_toTopOf="@id/activity_main_listview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        android:backgroundTint="@color/design_default_color_primary_variant"
         tools:targetApi="lollipop" />
+
+    <EditText
+        android:id="@+id/edittext_pesquisar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:hint="@string/exemplo_pesquisa"
+        android:inputType="textPersonName"
+        android:textColor="#E4DDDD"
+        android:textColorHint="#F3F0F0"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/botao_pesquisar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        android:autofillHints="no"/>
 
     <ListView
         android:id="@+id/activity_main_listview"
-        tools:listitem="@layout/layout_item_listview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view">
+        app:layout_constraintTop_toBottomOf="@id/view"
+        tools:listitem="@layout/layout_item_listview">
 
     </ListView>
 
@@ -39,9 +60,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Button
+        android:id="@+id/botao_pesquisar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/nome_botao_pesquisar"
+        app:layout_constraintBottom_toBottomOf="@+id/edittext_pesquisar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/edittext_pesquisar"
+        app:layout_constraintTop_toTopOf="@+id/edittext_pesquisar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
