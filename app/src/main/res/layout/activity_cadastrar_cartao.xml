@@ -113,7 +113,8 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/spinnerCategoria"
+            android:entries="@array/linguagens"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -129,9 +130,9 @@
             android:text="@string/login"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/spinner"
-            app:layout_constraintStart_toStartOf="@+id/spinner"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+            app:layout_constraintEnd_toEndOf="@+id/spinnerCategoria"
+            app:layout_constraintStart_toStartOf="@+id/spinnerCategoria"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerCategoria" />
 
         <EditText
             android:id="@+id/editTextTextPersonName2"
@@ -141,7 +142,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/spinner"
+            app:layout_constraintEnd_toEndOf="@+id/spinnerCategoria"
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 

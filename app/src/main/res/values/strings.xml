@@ -9,4 +9,15 @@
     <string name="salvar_cartao">salvar cartão</string>
     <string name="ex_facebook">Ex: Facebook</string>
     <string name="senha">Senha</string>
+
+
+    <string-array name="linguagens">
+        <item>Site de compras</item>
+        <item>Site de educação</item>
+        <item>Streaming</item>
+        <item>Rede social</item>
+        <item>Banco</item>
+        <item>Rede social</item>
+        <item>Jogos</item>
+    </string-array>
 </resources>
