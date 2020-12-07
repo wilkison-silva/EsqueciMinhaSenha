@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -18,12 +19,10 @@ import br.com.will.esqueciminhasenha.R;
 
 public class CadastrarCartaoActivity extends AppCompatActivity {
 
-
-    private Spinner spinnerCategoria;
-    private List<String> listCategoria;
     private TextView cardviewDescricao;
     private EditText editTextDescricao;
     private TextView cardviewCategoria;
+    private Spinner spinnerCategoria;
     private TextView cardviewLogin;
     private TextView cardviewSenha;
 
@@ -43,5 +42,19 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             }
         });
 
+        spinnerCategoria = findViewById(R.id.spinnerCategoria);
+        cardviewCategoria = findViewById(R.id.cardview_textview_categoria);
+
+        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cardviewCategoria.setText(spinnerCategoria.getItemAtPosition(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }

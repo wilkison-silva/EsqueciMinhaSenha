@@ -12,6 +12,7 @@
 
 
     <string-array name="linguagens">
+        <item></item>
         <item>Site de compras</item>
         <item>Site de educação</item>
         <item>Streaming</item>

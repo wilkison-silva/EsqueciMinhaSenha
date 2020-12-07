@@ -72,7 +72,7 @@ public class AdapterListView extends BaseAdapter {
     }
 
     private void mostrarCategoria(View view, Cartao cartao) {
-        TextView textViewCategoria = view.findViewById(R.id.textView_Categoria);
+        TextView textViewCategoria = view.findViewById(R.id.cardview_textview_categoria);
         textViewCategoria.setText(cartao.getCategoria());
     }
 

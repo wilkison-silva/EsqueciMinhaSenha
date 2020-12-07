@@ -38,7 +38,7 @@
                 tools:text="@sample/Cartoes.json/cartoes/descricao" />
 
             <TextView
-                android:id="@+id/textView_Categoria"
+                android:id="@+id/cardview_textview_categoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -54,8 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/textView_Categoria"
-                app:layout_constraintTop_toBottomOf="@+id/textView_Categoria"
+                app:layout_constraintStart_toStartOf="@+id/cardview_textview_categoria"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_textview_categoria"
                 tools:text="@sample/Cartoes.json/cartoes/login" />
 
             <TextView
