@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     private EditText editTextLogin;
     private TextView cardviewSenha;
     private EditText editTextSenha;
+    private ImageButton imageButtonCorLaranja;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,14 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 cardviewSenha.setText(editTextSenha.getText().toString());
                 return false;
+            }
+        });
+
+        imageButtonCorLaranja = findViewById(R.id.imagebutton_cor_laranja);
+        imageButtonCorLaranja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

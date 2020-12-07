@@ -10,6 +10,7 @@
     <string name="ex_facebook">Ex: Facebook</string>
     <string name="senha">Senha</string>
     <string name="adicionar_novo_cartao">Adicionar novo cartão</string>
+    <string name="cor">Cor</string>
 
 
     <string-array name="linguagens">
