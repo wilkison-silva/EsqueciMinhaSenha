@@ -33,6 +33,8 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_cartao);
 
+        setTitle(getString(R.string.adicionar_novo_cartao));
+
         cardviewDescricao = findViewById(R.id.cardview_textview_descricao);
         editTextDescricao = findViewById(R.id.edittext_descricao);
 
