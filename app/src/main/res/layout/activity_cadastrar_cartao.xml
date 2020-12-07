@@ -63,7 +63,7 @@
                     tools:text="@sample/Cartoes.json/cartoes/login" />
 
                 <TextView
-                    android:id="@+id/textView_Senha"
+                    android:id="@+id/cardview_textview_senha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -158,7 +158,7 @@
             app:layout_constraintTop_toBottomOf="@+id/edittext_login" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/edittext_senha"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -176,9 +176,9 @@
             android:layout_marginTop="32dp"
             android:text="@string/salvar_cartao"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName3"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_senha"
+            app:layout_constraintStart_toStartOf="@+id/edittext_senha"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_senha"
             app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

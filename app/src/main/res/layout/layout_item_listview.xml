@@ -59,7 +59,7 @@
                 tools:text="@sample/Cartoes.json/cartoes/login" />
 
             <TextView
-                android:id="@+id/textView_Senha"
+                android:id="@+id/cardview_textview_senha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"

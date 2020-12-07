@@ -26,6 +26,7 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     private TextView cardviewLogin;
     private EditText editTextLogin;
     private TextView cardviewSenha;
+    private EditText editTextSenha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,17 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 cardviewLogin.setText(editTextLogin.getText().toString());
+                return false;
+            }
+        });
+
+        cardviewSenha = findViewById(R.id.cardview_textview_senha);
+        editTextSenha = findViewById(R.id.edittext_senha);
+
+        editTextSenha.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                cardviewSenha.setText(editTextSenha.getText().toString());
                 return false;
             }
         });
