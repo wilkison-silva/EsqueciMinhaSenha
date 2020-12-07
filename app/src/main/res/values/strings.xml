@@ -3,4 +3,10 @@
     <string name="exemplo_pesquisa">Ex: Spotify</string>
     <string name="nome_botao_pesquisar">Pesquisar</string>
     <string name="todo">TODO</string>
+    <string name="descricao">Descrição</string>
+    <string name="categoria">Categoria</string>
+    <string name="login">Login</string>
+    <string name="salvar_cartao">salvar cartão</string>
+    <string name="ex_facebook">Ex: Facebook</string>
+    <string name="senha">Senha</string>
 </resources>
