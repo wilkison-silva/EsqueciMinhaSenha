@@ -3,8 +3,12 @@ package br.com.will.esqueciminhasenha.UI.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,25 +21,27 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
 
     private Spinner spinnerCategoria;
     private List<String> listCategoria;
+    private TextView cardviewDescricao;
+    private EditText editTextDescricao;
+    private TextView cardviewCategoria;
+    private TextView cardviewLogin;
+    private TextView cardviewSenha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_cartao);
 
-        /*listCategoria = new ArrayList<>();
-        listCategoria.add("Site de compras");
-        listCategoria.add("Rede social");
-        listCategoria.add("Streaming");
-        listCategoria.add("E-mails");
+        cardviewDescricao = findViewById(R.id.cardview_textview_descricao);
+        editTextDescricao = findViewById(R.id.edittext_descricao);
 
-        spinnerCategoria = findViewById(R.id.spinnerCategoria);
+        editTextDescricao.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                cardviewDescricao.setText(editTextDescricao.getText().toString());
+                return false;
+            }
+        });
 
-        ArrayAdapter<String> arrayAdapterSpinnerCategoria = new ArrayAdapter<>(this,
-                R.layout.support_simple_spinner_dropdown_item,
-                this.listCategoria);
-
-        spinnerCategoria.setAdapter(arrayAdapterSpinnerCategoria);
-*/
     }
 }

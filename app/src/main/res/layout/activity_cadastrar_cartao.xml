@@ -30,7 +30,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView_Descricao"
+                    android:id="@+id/cardview_textview_descricao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -49,8 +49,8 @@
                     android:textColor="#80000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView_Descricao"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_Descricao"
+                    app:layout_constraintStart_toStartOf="@+id/cardview_textview_descricao"
+                    app:layout_constraintTop_toBottomOf="@+id/cardview_textview_descricao"
                     tools:text="@sample/Cartoes.json/cartoes/categoria" />
 
                 <TextView
@@ -88,7 +88,7 @@
             app:layout_constraintTop_toBottomOf="@id/item_listview_card_view" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/edittext_descricao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -108,9 +108,9 @@
             android:text="@string/categoria"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+            app:layout_constraintEnd_toEndOf="@+id/edittext_descricao"
+            app:layout_constraintStart_toStartOf="@+id/edittext_descricao"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_descricao" />
 
         <Spinner
             android:id="@+id/spinnerCategoria"
@@ -118,7 +118,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_descricao"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 

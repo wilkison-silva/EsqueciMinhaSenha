@@ -77,7 +77,7 @@ public class AdapterListView extends BaseAdapter {
     }
 
     private void mostrarDescricao(View view, Cartao cartao) {
-        TextView textViewDescricao = view.findViewById(R.id.textView_Descricao);
+        TextView textViewDescricao = view.findViewById(R.id.cardview_textview_descricao);
         textViewDescricao.setText(cartao.getDescricao() );
     }
 
