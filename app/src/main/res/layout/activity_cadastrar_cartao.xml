@@ -54,7 +54,7 @@
                     tools:text="@sample/Cartoes.json/cartoes/categoria" />
 
                 <TextView
-                    android:id="@+id/textView_Login"
+                    android:id="@+id/cardview_textview_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -67,8 +67,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
-                    app:layout_constraintStart_toStartOf="@+id/textView_Login"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_Login"
+                    app:layout_constraintStart_toStartOf="@+id/cardview_textview_login"
+                    app:layout_constraintTop_toBottomOf="@+id/cardview_textview_login"
                     tools:text="@sample/Cartoes.json/cartoes/senha" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -135,13 +135,12 @@
             app:layout_constraintTop_toBottomOf="@+id/spinnerCategoria" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/edittext_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/spinnerCategoria"
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -154,9 +153,9 @@
             android:text="@string/senha"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+            app:layout_constraintEnd_toEndOf="@+id/edittext_login"
+            app:layout_constraintStart_toStartOf="@+id/edittext_login"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_login" />
 
         <EditText
             android:id="@+id/editTextTextPersonName3"
@@ -165,7 +164,7 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_login"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 

@@ -50,7 +50,7 @@
                 tools:text="@sample/Cartoes.json/cartoes/categoria" />
 
             <TextView
-                android:id="@+id/textView_Login"
+                android:id="@+id/cardview_textview_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -63,8 +63,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
-                app:layout_constraintStart_toStartOf="@+id/textView_Login"
-                app:layout_constraintTop_toBottomOf="@+id/textView_Login"
+                app:layout_constraintStart_toStartOf="@+id/cardview_textview_login"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_textview_login"
                 tools:text="@sample/Cartoes.json/cartoes/senha" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

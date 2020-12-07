@@ -24,6 +24,7 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     private TextView cardviewCategoria;
     private Spinner spinnerCategoria;
     private TextView cardviewLogin;
+    private EditText editTextLogin;
     private TextView cardviewSenha;
 
     @Override
@@ -54,6 +55,17 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        cardviewLogin = findViewById(R.id.cardview_textview_login);
+        editTextLogin = findViewById(R.id.edittext_login);
+
+        editTextLogin.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                cardviewLogin.setText(editTextLogin.getText().toString());
+                return false;
             }
         });
     }
