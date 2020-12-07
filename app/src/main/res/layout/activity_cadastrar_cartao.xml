@@ -12,7 +12,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/item_listview_card_view"
+            android:id="@+id/cardview_simulacao"
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_margin="8dp"
@@ -83,8 +83,8 @@
             android:text="@string/descricao"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/item_listview_card_view"
-            app:layout_constraintTop_toBottomOf="@id/item_listview_card_view" />
+            app:layout_constraintStart_toStartOf="@+id/cardview_simulacao"
+            app:layout_constraintTop_toBottomOf="@id/cardview_simulacao" />
 
         <EditText
             android:id="@+id/edittext_descricao"
@@ -94,7 +94,7 @@
             android:ems="10"
             android:hint="@string/ex_facebook"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="@+id/item_listview_card_view"
+            app:layout_constraintEnd_toEndOf="@+id/cardview_simulacao"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -172,13 +172,12 @@
             android:id="@+id/button_cadastrar_novo_cartao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="64dp"
             android:text="@string/salvar_cartao"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/edittext_senha"
             app:layout_constraintStart_toStartOf="@+id/edittext_senha"
-            app:layout_constraintTop_toBottomOf="@+id/imagebutton_cor_laranja"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
             android:id="@+id/textView5"
@@ -199,51 +198,55 @@
             android:background="@null"
             app:layout_constraintStart_toStartOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:srcCompat="@drawable/botao_cor_nao_selecionado" />
+            app:srcCompat="@drawable/botao_nao_selecionado" />
 
         <ImageButton
             android:id="@+id/imagebutton_cor_vermelho"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@null"
-            android:tint="#DC1B1B"
-            app:layout_constraintBottom_toBottomOf="@+id/imagebutton_cor_laranja"
+            android:tint="#8B0000"
             app:layout_constraintStart_toEndOf="@+id/imagebutton_cor_laranja"
-            app:srcCompat="@drawable/botao_cor_nao_selecionado" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:srcCompat="@drawable/botao_nao_selecionado" />
 
         <ImageButton
             android:id="@+id/imagebutton_Cor_verde_claro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@null"
             android:tint="#1DE3AA"
-            app:layout_constraintBottom_toBottomOf="@+id/imagebutton_cor_vermelho"
             app:layout_constraintStart_toEndOf="@+id/imagebutton_cor_vermelho"
-            app:srcCompat="@drawable/botao_cor_nao_selecionado" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:srcCompat="@drawable/botao_nao_selecionado" />
 
         <ImageButton
             android:id="@+id/imagebutton_cor_ciano"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@null"
             android:tint="#70FFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/imagebutton_Cor_verde_claro"
             app:layout_constraintStart_toEndOf="@+id/imagebutton_Cor_verde_claro"
-            app:srcCompat="@drawable/botao_cor_nao_selecionado" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:srcCompat="@drawable/botao_nao_selecionado" />
 
         <ImageButton
             android:id="@+id/imagebutton_cor_amarelo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@null"
             android:tint="#FFDE16"
-            app:layout_constraintBottom_toBottomOf="@+id/imagebutton_cor_ciano"
             app:layout_constraintStart_toEndOf="@+id/imagebutton_cor_ciano"
-            app:srcCompat="@drawable/botao_cor_nao_selecionado" />
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:srcCompat="@drawable/botao_nao_selecionado" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
