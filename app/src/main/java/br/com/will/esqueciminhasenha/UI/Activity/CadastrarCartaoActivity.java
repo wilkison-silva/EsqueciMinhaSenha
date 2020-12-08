@@ -5,6 +5,8 @@ import androidx.cardview.widget.CardView;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -112,11 +114,20 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         cardviewSenha = findViewById(R.id.cardview_textview_senha);
         editTextSenha = findViewById(R.id.edittext_senha);
 
-        editTextSenha.setOnKeyListener(new View.OnKeyListener() {
+        editTextSenha.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 cardviewSenha.setText(editTextSenha.getText().toString());
-                return false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -125,11 +136,20 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         cardviewLogin = findViewById(R.id.cardview_textview_login);
         editTextLogin = findViewById(R.id.edittext_login);
 
-        editTextLogin.setOnKeyListener(new View.OnKeyListener() {
+        editTextLogin.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 cardviewLogin.setText(editTextLogin.getText().toString());
-                return false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -154,11 +174,20 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     private void configuraEditTextDescricao() {
         cardviewDescricao = findViewById(R.id.cardview_textview_descricao);
         editTextDescricao = findViewById(R.id.edittext_descricao);
-        editTextDescricao.setOnKeyListener(new View.OnKeyListener() {
+        editTextDescricao.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 cardviewDescricao.setText(editTextDescricao.getText().toString());
-                return false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
