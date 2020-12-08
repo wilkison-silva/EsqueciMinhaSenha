@@ -36,10 +36,6 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
 
     private Cartao cartao;
 
-    private boolean corLaranja = false;
-    private boolean corVermelha = false;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +44,97 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         setTitle(getString(R.string.adicionar_novo_cartao));
         cardView = findViewById(R.id.cardview_simulacao);
 
-        cardviewDescricao = findViewById(R.id.cardview_textview_descricao);
-        editTextDescricao = findViewById(R.id.edittext_descricao);
+        configuraEditTextDescricao();
+        configurarSpinnerCategoria();
+        configuraEditTextLogin();
+        configuraEditTextSenha();
 
-        editTextDescricao.setOnKeyListener(new View.OnKeyListener() {
+        configuraImageButtonCorLaranja();
+        configuraImageButtonCorVermelho();
+        configuraImageButtonCorVerdeClaro();
+        configuraImageButtonCorCiano();
+        configuraImageButtonCorAmarelo();
+
+
+    }
+
+    private void configuraImageButtonCorAmarelo() {
+        imageButtonCorAmarelo = findViewById(R.id.imagebutton_cor_amarelo);
+        imageButtonCorAmarelo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                configurarCorCardView(5);
+            }
+        });
+    }
+
+    private void configuraImageButtonCorCiano() {
+        imageButtonCorCiano = findViewById(R.id.imagebutton_cor_ciano);
+        imageButtonCorCiano.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                configurarCorCardView(4);
+            }
+        });
+    }
+
+    private void configuraImageButtonCorVerdeClaro() {
+        imageButtonCorVerdeClaro = findViewById(R.id.imagebutton_Cor_verde_claro);
+        imageButtonCorVerdeClaro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                configurarCorCardView(3);
+            }
+        });
+    }
+
+    private void configuraImageButtonCorVermelho() {
+        imageButtonCorVermelho = findViewById(R.id.imagebutton_cor_vermelho);
+        imageButtonCorVermelho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                configurarCorCardView(2);
+            }
+        });
+    }
+
+    private void configuraImageButtonCorLaranja() {
+        imageButtonCorLaranja = findViewById(R.id.imagebutton_cor_laranja);
+        imageButtonCorLaranja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                configurarCorCardView(1);
+            }
+        });
+    }
+
+    private void configuraEditTextSenha() {
+        cardviewSenha = findViewById(R.id.cardview_textview_senha);
+        editTextSenha = findViewById(R.id.edittext_senha);
+
+        editTextSenha.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                cardviewDescricao.setText(editTextDescricao.getText().toString());
+                cardviewSenha.setText(editTextSenha.getText().toString());
                 return false;
             }
         });
+    }
 
+    private void configuraEditTextLogin() {
+        cardviewLogin = findViewById(R.id.cardview_textview_login);
+        editTextLogin = findViewById(R.id.edittext_login);
+
+        editTextLogin.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                cardviewLogin.setText(editTextLogin.getText().toString());
+                return false;
+            }
+        });
+    }
+
+    private void configurarSpinnerCategoria() {
         spinnerCategoria = findViewById(R.id.spinnerCategoria);
         cardviewCategoria = findViewById(R.id.cardview_textview_categoria);
 
@@ -73,60 +149,50 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        cardviewLogin = findViewById(R.id.cardview_textview_login);
-        editTextLogin = findViewById(R.id.edittext_login);
-
-        editTextLogin.setOnKeyListener(new View.OnKeyListener() {
+    private void configuraEditTextDescricao() {
+        cardviewDescricao = findViewById(R.id.cardview_textview_descricao);
+        editTextDescricao = findViewById(R.id.edittext_descricao);
+        editTextDescricao.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                cardviewLogin.setText(editTextLogin.getText().toString());
+                cardviewDescricao.setText(editTextDescricao.getText().toString());
                 return false;
             }
         });
+    }
 
-        cardviewSenha = findViewById(R.id.cardview_textview_senha);
-        editTextSenha = findViewById(R.id.edittext_senha);
+    private void configurarCorCardView(int idImageButton) {
+        ResetarImageButtons();
+        if (idImageButton == 1) {
+            imageButtonCorLaranja.setImageResource(R.drawable.botao_selecionado);
+            cardView.setCardBackgroundColor(Color.parseColor("#FF8C00"));
+        } else if (idImageButton == 2) {
+            imageButtonCorVermelho.setImageResource(R.drawable.botao_selecionado);
+            cardView.setCardBackgroundColor(Color.parseColor("#8B0000"));
+        } else if (idImageButton == 3) {
+            imageButtonCorVerdeClaro.setImageResource(R.drawable.botao_selecionado);
+            cardView.setCardBackgroundColor(Color.parseColor("#1DE3AA"));
+        } else if (idImageButton == 4) {
+            imageButtonCorCiano.setImageResource(R.drawable.botao_selecionado);
+            cardView.setCardBackgroundColor(Color.parseColor("#70FFFF"));
+        } else if (idImageButton == 5) {
+            imageButtonCorAmarelo.setImageResource(R.drawable.botao_selecionado);
+            cardView.setCardBackgroundColor(Color.parseColor("#FFDE16"));
+        }
+    }
 
-        editTextSenha.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                cardviewSenha.setText(editTextSenha.getText().toString());
-                return false;
-            }
-        });
+    private void configurarCorTextViews() {
 
-        imageButtonCorLaranja = findViewById(R.id.imagebutton_cor_laranja);
-        imageButtonCorLaranja.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (corLaranja == false) {
-                    corLaranja = true;
-                    corVermelha = false;
-                    imageButtonCorLaranja.setImageResource(R.drawable.botao_selecionado);
-                    imageButtonCorVermelho.setImageResource(R.drawable.botao_nao_selecionado);
-                    cardView.setCardBackgroundColor(Color.parseColor("#FF8C00"));
-                }
-            }
-        });
+    }
 
-        imageButtonCorVermelho = findViewById(R.id.imagebutton_cor_vermelho);
-        imageButtonCorVermelho.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (corVermelha == false){
-                    corLaranja = false;
-                    corVermelha = true;
-                    imageButtonCorLaranja.setImageResource(R.drawable.botao_nao_selecionado);
-                    imageButtonCorVermelho.setImageResource(R.drawable.botao_selecionado);
-                    cardView.setCardBackgroundColor(Color.parseColor("#8B0000"));
-                }
-
-            }
-        });
-
-
-
+    private void ResetarImageButtons() {
+        imageButtonCorLaranja.setImageResource(R.drawable.botao_nao_selecionado);
+        imageButtonCorVermelho.setImageResource(R.drawable.botao_nao_selecionado);
+        imageButtonCorVerdeClaro.setImageResource(R.drawable.botao_nao_selecionado);
+        imageButtonCorCiano.setImageResource(R.drawable.botao_nao_selecionado);
+        imageButtonCorAmarelo.setImageResource(R.drawable.botao_nao_selecionado);
     }
 
 
