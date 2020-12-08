@@ -168,23 +168,31 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         if (idImageButton == 1) {
             imageButtonCorLaranja.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#FF8C00"));
+            configurarCorTextViews("#000000");
         } else if (idImageButton == 2) {
             imageButtonCorVermelho.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#8B0000"));
+            configurarCorTextViews("#FFFFFF");
         } else if (idImageButton == 3) {
             imageButtonCorVerdeClaro.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#1DE3AA"));
+            configurarCorTextViews("#000000");
         } else if (idImageButton == 4) {
             imageButtonCorCiano.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#70FFFF"));
+            configurarCorTextViews("#000000");
         } else if (idImageButton == 5) {
             imageButtonCorAmarelo.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#FFDE16"));
+            configurarCorTextViews("#000000");
         }
     }
 
-    private void configurarCorTextViews() {
-
+    private void configurarCorTextViews(String cor) {
+        cardviewDescricao.setTextColor(Color.parseColor(cor));
+        cardviewCategoria.setTextColor(Color.parseColor(cor));
+        cardviewSenha.setTextColor(Color.parseColor(cor));
+        cardviewLogin.setTextColor(Color.parseColor(cor));
     }
 
     private void ResetarImageButtons() {
