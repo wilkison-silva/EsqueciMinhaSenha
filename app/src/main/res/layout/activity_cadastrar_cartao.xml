@@ -250,6 +250,30 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:srcCompat="@drawable/botao_nao_selecionado" />
 
+        <ImageButton
+            android:id="@+id/imagebutton_cor_rosa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:tint="#FF1493"
+            app:layout_constraintStart_toEndOf="@+id/imagebutton_cor_amarelo"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:srcCompat="@drawable/botao_nao_selecionado" />
+
+        <ImageButton
+            android:id="@+id/imagebutton_cor_indigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:tint="#4B0082"
+            app:layout_constraintStart_toEndOf="@+id/imagebutton_cor_rosa"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:srcCompat="@drawable/botao_nao_selecionado" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
