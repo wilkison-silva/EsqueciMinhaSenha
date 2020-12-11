@@ -20,6 +20,8 @@ import br.com.will.esqueciminhasenha.R;
 
 public class CadastrarCartaoActivity extends AppCompatActivity {
 
+    public static final String COR_TEXTVIEWS_FUNDO_CLARO = "#A1000000";
+    public static final String COR_TEXTVIEWS_FUNDO_ESCURO = "#EFE9E9";
     private CardView cardView;
     private TextView cardviewDescricao;
     private EditText editTextDescricao;
@@ -34,7 +36,8 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     private ImageButton imageButtonCorVerdeClaro;
     private ImageButton imageButtonCorCiano;
     private ImageButton imageButtonCorAmarelo;
-
+    private ImageButton imageButtonCorRosa;
+    private ImageButton imageButtonCorIndigo;
 
     private Cartao cartao;
 
@@ -56,8 +59,31 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         configuraImageButtonCorVerdeClaro();
         configuraImageButtonCorCiano();
         configuraImageButtonCorAmarelo();
+        configuraImageButtonCorRosa();
+        configuraImageButtonCorIndigo();
 
 
+
+    }
+
+    private void configuraImageButtonCorIndigo() {
+        imageButtonCorIndigo = findViewById(R.id.imagebutton_cor_indigo);
+        imageButtonCorIndigo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                configurarCorCardView(7);
+            }
+        });
+    }
+
+    private void configuraImageButtonCorRosa() {
+        imageButtonCorRosa = findViewById(R.id.imagebutton_cor_rosa);
+        imageButtonCorRosa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                configurarCorCardView(6);
+            }
+        });
     }
 
     private void configuraImageButtonCorAmarelo() {
@@ -197,24 +223,34 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         if (idImageButton == 1) {
             imageButtonCorLaranja.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#FF8C00"));
-            configurarCorTextViews("#000000");
+            configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
         } else if (idImageButton == 2) {
             imageButtonCorVermelho.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#8B0000"));
-            configurarCorTextViews("#FFFFFF");
+            configurarCorTextViews(COR_TEXTVIEWS_FUNDO_ESCURO);
         } else if (idImageButton == 3) {
             imageButtonCorVerdeClaro.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#1DE3AA"));
-            configurarCorTextViews("#000000");
+            configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
         } else if (idImageButton == 4) {
             imageButtonCorCiano.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#70FFFF"));
-            configurarCorTextViews("#000000");
+            configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
         } else if (idImageButton == 5) {
             imageButtonCorAmarelo.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#FFDE16"));
-            configurarCorTextViews("#000000");
+            configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
+        } else if (idImageButton == 6) {
+            imageButtonCorRosa.setImageResource(R.drawable.botao_selecionado);
+            cardView.setCardBackgroundColor(Color.parseColor("#FF1493"));
+            configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
+        } else if (idImageButton == 7) {
+            imageButtonCorIndigo.setImageResource(R.drawable.botao_selecionado);
+            cardView.setCardBackgroundColor(Color.parseColor("#4B0082"));
+            configurarCorTextViews(COR_TEXTVIEWS_FUNDO_ESCURO);
         }
+
+
     }
 
     private void configurarCorTextViews(String cor) {
@@ -230,6 +266,8 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         imageButtonCorVerdeClaro.setImageResource(R.drawable.botao_nao_selecionado);
         imageButtonCorCiano.setImageResource(R.drawable.botao_nao_selecionado);
         imageButtonCorAmarelo.setImageResource(R.drawable.botao_nao_selecionado);
+        imageButtonCorRosa.setImageResource(R.drawable.botao_nao_selecionado);
+        imageButtonCorIndigo.setImageResource(R.drawable.botao_nao_selecionado);
     }
 
 
