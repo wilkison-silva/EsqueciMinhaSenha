@@ -57,27 +57,27 @@ public class AdapterListView extends BaseAdapter {
     }
 
     private void configurarCor(View view, Cartao cartao) {
-        CardView cardView = view.findViewById(R.id.item_listview_card_view);
+        CardView cardView = view.findViewById(R.id.cardview_simulacao);
         cardView.setCardBackgroundColor(Color.parseColor(cartao.getCor()));
     }
 
     private void mostrarSenha(View view, Cartao cartao) {
-        TextView textViewSenha = view.findViewById(R.id.textView_Senha);
+        TextView textViewSenha = view.findViewById(R.id.cardview_textview_senha);
         textViewSenha.setText(cartao.getSenha());
     }
 
     private void mostrarLogin(View view, Cartao cartao) {
-        TextView textViewLogin = view.findViewById(R.id.textView_Login);
+        TextView textViewLogin = view.findViewById(R.id.cardview_textview_login);
         textViewLogin.setText(cartao.getLogin());
     }
 
     private void mostrarCategoria(View view, Cartao cartao) {
-        TextView textViewCategoria = view.findViewById(R.id.textView_Categoria);
+        TextView textViewCategoria = view.findViewById(R.id.cardview_textview_categoria);
         textViewCategoria.setText(cartao.getCategoria());
     }
 
     private void mostrarDescricao(View view, Cartao cartao) {
-        TextView textViewDescricao = view.findViewById(R.id.textView_Descricao);
+        TextView textViewDescricao = view.findViewById(R.id.cardview_textview_descricao);
         textViewDescricao.setText(cartao.getDescricao() );
     }
 

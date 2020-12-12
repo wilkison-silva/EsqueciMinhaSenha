@@ -9,9 +9,12 @@
     <string name="salvar_cartao">salvar cartão</string>
     <string name="ex_facebook">Ex: Facebook</string>
     <string name="senha">Senha</string>
+    <string name="adicionar_novo_cartao">Adicionar novo cartão</string>
+    <string name="cor">Cor</string>
 
 
     <string-array name="linguagens">
+        <item></item>
         <item>Site de compras</item>
         <item>Site de educação</item>
         <item>Streaming</item>
