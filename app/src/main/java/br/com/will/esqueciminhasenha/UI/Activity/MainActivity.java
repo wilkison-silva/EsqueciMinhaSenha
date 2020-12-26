@@ -56,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void persistirDadosdeExemplos() {
-        cartaoList.add(new Cartao("Instagram","rede social","wilkisonmartinsdasilva@gmail.com","91952205e72","#00FFFF"));
-        cartaoList.add(new Cartao("Spotify","streaming","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#87CEFA"));
-        cartaoList.add(new Cartao("Facebook","site de compras","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#00FFFF"));
-        cartaoList.add(new Cartao("GitHub","site de educação","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#006400"));
-        cartaoList.add(new Cartao("Alura","site de educação","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#87CEFA"));
-        cartaoList.add(new Cartao("Aliexpress","site de compras","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#8B4513"));
+        cartaoList.add(new Cartao("Instagram","rede social","wilkisonmartinsdasilva@gmail.com","91952205e72","#00FFFF","#000000"));
+        cartaoList.add(new Cartao("Spotify","streaming","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#87CEFA","#000000"));
+        cartaoList.add(new Cartao("Facebook","site de compras","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#00FFFF","#000000"));
+        cartaoList.add(new Cartao("GitHub","site de educação","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#006400","#000000"));
+        cartaoList.add(new Cartao("Alura","site de educação","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#87CEFA","#000000"));
+        cartaoList.add(new Cartao("Aliexpress","site de compras","wilkisonmartinsdasilva@gmail.com","91952205e72will", "#8B4513","#000000"));
     }
 }

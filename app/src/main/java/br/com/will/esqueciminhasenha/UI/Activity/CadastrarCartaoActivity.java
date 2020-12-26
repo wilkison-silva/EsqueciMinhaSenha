@@ -7,16 +7,23 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
+
+import static android.service.autofill.Validators.or;
 
 public class CadastrarCartaoActivity extends AppCompatActivity {
 
@@ -38,8 +45,11 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     private ImageButton imageButtonCorAmarelo;
     private ImageButton imageButtonCorRosa;
     private ImageButton imageButtonCorIndigo;
+    private Button buttonCadastrarNovoCartao;
 
     private Cartao cartao;
+    private String corCartao = null;
+    private String corTexto = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +72,55 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         configuraImageButtonCorRosa();
         configuraImageButtonCorIndigo();
 
+        buttonCadastrarNovoCartao = findViewById(R.id.button_cadastrar_novo_cartao);
+        buttonCadastrarNovoCartao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(CadastrarCartaoActivity.this, "preencher todos os campos",Toast.LENGTH_LONG).show();
+                if(verificarPreenchimentoDosCampos() == true){
+                    Cartao cartao = getDadosFormulario();
+                    Toast.makeText(CadastrarCartaoActivity.this, "Cartão salvo",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
+    private boolean verificarPreenchimentoDosCampos(){
+
+        if (editTextDescricao.getText().toString().equals("")){
+            Toast.makeText(CadastrarCartaoActivity.this, "Descrição não pode ser vazia",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (spinnerCategoria.getSelectedItem().toString().equals("")){
+            Toast.makeText(CadastrarCartaoActivity.this, "Selecione uma categoria",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (editTextLogin.getText().toString().equals("")){
+            Toast.makeText(CadastrarCartaoActivity.this, "Preencha seu login de acesso",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (editTextSenha.getText().toString().equals("")){
+            Toast.makeText(CadastrarCartaoActivity.this, "Informe a senha de acesso",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if ((corCartao == null) && (corTexto == null)){
+            Toast.makeText(CadastrarCartaoActivity.this, "Selecione uma cor na paleta",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    private Cartao getDadosFormulario(){
+        Cartao cartao = new Cartao();
+
+        cartao.setDescricao(editTextDescricao.getText().toString());
+        cartao.setCategoria(spinnerCategoria.getSelectedItem().toString());
+        cartao.setLogin(editTextLogin.getText().toString());
+        cartao.setSenha(editTextSenha.getText().toString());
 
 
+        return cartao;
     }
 
     private void configuraImageButtonCorIndigo() {
@@ -223,30 +280,37 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         if (idImageButton == 1) {
             imageButtonCorLaranja.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#FF8C00"));
+            corCartao = "#FF8C00";
             configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
         } else if (idImageButton == 2) {
             imageButtonCorVermelho.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#8B0000"));
+            corCartao = "#8B0000";
             configurarCorTextViews(COR_TEXTVIEWS_FUNDO_ESCURO);
         } else if (idImageButton == 3) {
             imageButtonCorVerdeClaro.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#1DE3AA"));
+            corCartao = "#1DE3AA";
             configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
         } else if (idImageButton == 4) {
             imageButtonCorCiano.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#70FFFF"));
+            corCartao = "#70FFFF";
             configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
         } else if (idImageButton == 5) {
             imageButtonCorAmarelo.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#FFDE16"));
+            corCartao = "#FFDE16";
             configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
         } else if (idImageButton == 6) {
             imageButtonCorRosa.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#FF1493"));
+            corCartao = "#FF1493";
             configurarCorTextViews(COR_TEXTVIEWS_FUNDO_CLARO);
         } else if (idImageButton == 7) {
             imageButtonCorIndigo.setImageResource(R.drawable.botao_selecionado);
             cardView.setCardBackgroundColor(Color.parseColor("#4B0082"));
+            corCartao = "#4B0082";
             configurarCorTextViews(COR_TEXTVIEWS_FUNDO_ESCURO);
         }
 
@@ -258,6 +322,7 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         cardviewCategoria.setTextColor(Color.parseColor(cor));
         cardviewSenha.setTextColor(Color.parseColor(cor));
         cardviewLogin.setTextColor(Color.parseColor(cor));
+        corTexto = cor;
     }
 
     private void ResetarImageButtons() {
