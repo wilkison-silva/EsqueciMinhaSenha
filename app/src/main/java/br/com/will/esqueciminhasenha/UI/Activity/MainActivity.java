@@ -17,6 +17,7 @@ import java.util.List;
 import br.com.will.esqueciminhasenha.Adapter.AdapterListView;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
+import br.com.will.esqueciminhasenha.Stream.Permissions;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Permissions permissions = new Permissions(MainActivity.this);
+        permissions.checkPermissionForExternalStorage();
+        permissions.requestPermissionForExternalStorage();
+
+        permissions.checkPermissionForCall();
+        permissions.requestPermissionForCall();
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 

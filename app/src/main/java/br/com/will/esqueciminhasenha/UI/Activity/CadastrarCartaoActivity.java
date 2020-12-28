@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
+import br.com.will.esqueciminhasenha.Stream.ConexaoArquivo;
 
 import static android.service.autofill.Validators.or;
 
@@ -77,10 +78,19 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(CadastrarCartaoActivity.this, "preencher todos os campos",Toast.LENGTH_LONG).show();
-                if(verificarPreenchimentoDosCampos() == true){
+                /*if(verificarPreenchimentoDosCampos() == true){
                     Cartao cartao = getDadosFormulario();
                     Toast.makeText(CadastrarCartaoActivity.this, "Cartão salvo",Toast.LENGTH_LONG).show();
                 }
+                */
+                try {
+                    ConexaoArquivo.createBufferedWriter("Teste");
+                    ConexaoArquivo.appendLine("testando 123456");
+                    ConexaoArquivo.closeWriter();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
