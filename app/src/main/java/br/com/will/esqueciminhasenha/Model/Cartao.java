@@ -55,7 +55,7 @@ public class Cartao {
         this.descricao = descricao;
     }
 
-    public String getCor_cartao() {
+    public String getCorCartao() {
         return corCartao;
     }
 

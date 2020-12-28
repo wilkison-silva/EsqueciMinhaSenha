@@ -58,7 +58,7 @@ public class AdapterListView extends BaseAdapter {
 
     private void configurarCor(View view, Cartao cartao) {
         CardView cardView = view.findViewById(R.id.cardview_simulacao);
-        cardView.setCardBackgroundColor(Color.parseColor(cartao.getCor_cartao()));
+        cardView.setCardBackgroundColor(Color.parseColor(cartao.getCorCartao()));
     }
 
     private void mostrarSenha(View view, Cartao cartao) {

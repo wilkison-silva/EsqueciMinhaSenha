@@ -77,23 +77,31 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         buttonCadastrarNovoCartao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(CadastrarCartaoActivity.this, "preencher todos os campos",Toast.LENGTH_LONG).show();
-                /*if(verificarPreenchimentoDosCampos() == true){
-                    Cartao cartao = getDadosFormulario();
-                    Toast.makeText(CadastrarCartaoActivity.this, "Cartão salvo",Toast.LENGTH_LONG).show();
-                }
-                */
                 try {
-                    ConexaoArquivo.createBufferedWriter("Teste");
-                    ConexaoArquivo.appendLine("testando 123456");
-                    ConexaoArquivo.closeWriter();
+                    if(verificarPreenchimentoDosCampos() == true) {
+                        Cartao cartao = getDadosFormulario();
+                        Toast.makeText(CadastrarCartaoActivity.this, "Cartão salvo", Toast.LENGTH_LONG).show();
+                        ConexaoArquivo.createBufferedWriter("EsqueciMinha");
+                        ConexaoArquivo.appendLine(getLinhaFormatada(cartao));
+                        ConexaoArquivo.closeWriter();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
 
+    }
+
+    private String getLinhaFormatada(Cartao cartao){
+        String linhaFormatada = cartao.getDescricao() + ","
+                                +cartao.getCategoria() + ","
+                                +cartao.getLogin() + ","
+                                +cartao.getSenha() + ","
+                                +cartao.getCorCartao() + ","
+                                +cartao.getCorTexto();
+
+        return  linhaFormatada;
     }
 
     private boolean verificarPreenchimentoDosCampos(){
@@ -128,7 +136,8 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         cartao.setCategoria(spinnerCategoria.getSelectedItem().toString());
         cartao.setLogin(editTextLogin.getText().toString());
         cartao.setSenha(editTextSenha.getText().toString());
-
+        cartao.setCorCartao(corCartao);
+        cartao.setCorTexto(corTexto);
 
         return cartao;
     }
