@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import android.os.Environment;
+import android.util.Log;
 
 public class ConexaoArquivo {
     private static BufferedReader bufferedReader;
@@ -67,22 +68,28 @@ public class ConexaoArquivo {
     /***********************************************************************
      *                      MÉTODOS DE ESCRITA                             *
      **********************************************************************/
-    public static boolean createBufferedWriter(String nomeArquivo)
-            throws IOException, Exception {
-        if (checkSdCard()) {
-            File file = new File(Environment.getExternalStorageDirectory() + "/" + nomeArquivo + ".txt");
-            if (file.exists() == false){
-                file.createNewFile();
+    public static boolean createBufferedWriter(String nomeArquivo) {
+
+        try {
+            if (checkSdCard()) {
+                File file = new File(Environment.getExternalStorageDirectory() + "/" + nomeArquivo + ".txt");
+                if (file.exists() == false){
+                    file.createNewFile();
+                }
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true), "ISO-8859-1"));
+                return true;
             }
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true), "ISO-8859-1"));
-            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
+        finally {
+            return false;
+        }
+
     }
 
-    public static boolean write(String text) throws IOException {
+    public static void write(String text) throws IOException {
         bufferedWriter.write(text);
-        return true;
     }
 
     public static boolean appendLine(String line) throws IOException{

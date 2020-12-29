@@ -11,15 +11,21 @@
     <string name="senha">Senha</string>
     <string name="adicionar_novo_cartao">Adicionar novo cartão</string>
     <string name="cor">Cor</string>
+    <string name="mensagem_cartao_salvo">Cartão salvo</string>
+    <string name="erro_ao_salvar">Ops. Algo deu errado.</string>
 
 
     <string-array name="linguagens">
         <item></item>
         <item>Site de compras</item>
         <item>Site de educação</item>
+        <item>Trabalho</item>
         <item>Streaming</item>
         <item>Rede social</item>
-        <item>Banco</item>
+        <item>Internet Banking</item>
+        <item>Senha de débito</item>
+        <item>Senha de crédito</item>
+        <item>Senha eletrônica</item>
         <item>Rede social</item>
         <item>Jogos</item>
     </string-array>

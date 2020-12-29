@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import br.com.will.esqueciminhasenha.Controller.CartaoController;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
 import br.com.will.esqueciminhasenha.Stream.ConexaoArquivo;
@@ -73,6 +74,11 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         configuraImageButtonCorRosa();
         configuraImageButtonCorIndigo();
 
+        configuraButtonSalvar();
+
+    }
+
+    private void configuraButtonSalvar() {
         buttonCadastrarNovoCartao = findViewById(R.id.button_cadastrar_novo_cartao);
         buttonCadastrarNovoCartao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,29 +86,22 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
                 try {
                     if(verificarPreenchimentoDosCampos() == true) {
                         Cartao cartao = getDadosFormulario();
-                        Toast.makeText(CadastrarCartaoActivity.this, "Cartão salvo", Toast.LENGTH_LONG).show();
-                        ConexaoArquivo.createBufferedWriter("EsqueciMinha");
-                        ConexaoArquivo.appendLine(getLinhaFormatada(cartao));
-                        ConexaoArquivo.closeWriter();
+
+                        CartaoController cartaoController = new CartaoController();
+                        if (cartaoController.cadastrar(cartao)) {
+                            Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
+                        }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
                 }
             }
         });
-
     }
 
-    private String getLinhaFormatada(Cartao cartao){
-        String linhaFormatada = cartao.getDescricao() + ","
-                                +cartao.getCategoria() + ","
-                                +cartao.getLogin() + ","
-                                +cartao.getSenha() + ","
-                                +cartao.getCorCartao() + ","
-                                +cartao.getCorTexto();
-
-        return  linhaFormatada;
-    }
 
     private boolean verificarPreenchimentoDosCampos(){
 

@@ -39,6 +39,17 @@ public class AdapterListView extends BaseAdapter {
         return 0;
     }
 
+    public void removerCartao(int position){
+        this.list.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void atualizarListaDeCartoes(List<Cartao> cartaoList){
+        this.list.clear();
+        this.list = cartaoList;
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -50,13 +61,13 @@ public class AdapterListView extends BaseAdapter {
         mostrarCategoria(view, cartao);
         mostrarLogin(view, cartao);
         mostrarSenha(view, cartao);
-        configurarCor(view, cartao);
+        configurarCorCortao(view, cartao);
 
         return view;
 
     }
 
-    private void configurarCor(View view, Cartao cartao) {
+    private void configurarCorCortao(View view, Cartao cartao) {
         CardView cardView = view.findViewById(R.id.cardview_simulacao);
         cardView.setCardBackgroundColor(Color.parseColor(cartao.getCorCartao()));
     }
@@ -64,21 +75,25 @@ public class AdapterListView extends BaseAdapter {
     private void mostrarSenha(View view, Cartao cartao) {
         TextView textViewSenha = view.findViewById(R.id.cardview_textview_senha);
         textViewSenha.setText(cartao.getSenha());
+        textViewSenha.setTextColor(Color.parseColor(cartao.getCorTexto()));
     }
 
     private void mostrarLogin(View view, Cartao cartao) {
         TextView textViewLogin = view.findViewById(R.id.cardview_textview_login);
         textViewLogin.setText(cartao.getLogin());
+        textViewLogin.setTextColor(Color.parseColor(cartao.getCorTexto()));
     }
 
     private void mostrarCategoria(View view, Cartao cartao) {
         TextView textViewCategoria = view.findViewById(R.id.cardview_textview_categoria);
         textViewCategoria.setText(cartao.getCategoria());
+        textViewCategoria.setTextColor(Color.parseColor(cartao.getCorTexto()));
     }
 
     private void mostrarDescricao(View view, Cartao cartao) {
         TextView textViewDescricao = view.findViewById(R.id.cardview_textview_descricao);
         textViewDescricao.setText(cartao.getDescricao() );
+        textViewDescricao.setTextColor(Color.parseColor(cartao.getCorTexto()));
     }
 
 
