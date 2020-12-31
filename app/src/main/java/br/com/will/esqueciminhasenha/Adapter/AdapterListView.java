@@ -1,11 +1,13 @@
 package br.com.will.esqueciminhasenha.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 
@@ -13,6 +15,9 @@ import java.util.List;
 
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
+import br.com.will.esqueciminhasenha.UI.Activity.CadastrarCartaoActivity;
+import br.com.will.esqueciminhasenha.UI.Activity.EditarCartaoActivity;
+import br.com.will.esqueciminhasenha.UI.Activity.MainActivity;
 
 public class AdapterListView extends BaseAdapter {
 
@@ -63,6 +68,8 @@ public class AdapterListView extends BaseAdapter {
         mostrarSenha(view, cartao);
         configurarCorCortao(view, cartao);
 
+
+
         return view;
 
     }
@@ -70,6 +77,14 @@ public class AdapterListView extends BaseAdapter {
     private void configurarCorCortao(View view, Cartao cartao) {
         CardView cardView = view.findViewById(R.id.cardview_simulacao);
         cardView.setCardBackgroundColor(Color.parseColor(cartao.getCorCartao()));
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, cartao.getDescricao(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context, EditarCartaoActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     private void mostrarSenha(View view, Cartao cartao) {

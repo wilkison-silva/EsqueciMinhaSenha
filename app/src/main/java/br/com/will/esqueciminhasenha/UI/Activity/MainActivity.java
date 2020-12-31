@@ -46,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
         adapterListView = new AdapterListView(cartaoList, this);
         listView.setAdapter(adapterListView);
 
+
+        configurarFlotActionButtonAdicionar();
+    }
+
+    private void configurarFlotActionButtonAdicionar() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
