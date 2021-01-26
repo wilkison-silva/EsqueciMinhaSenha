@@ -6,19 +6,21 @@ public class Cartao {
     private String categoria;
     private String login;
     private String descricao;
-    private String cor;
+    private String corCartao;
+    private String corTexto;
 
 
     public Cartao() {
 
     }
 
-    public Cartao(String descricao, String categoria, String login, String senha, String cor) {
+    public Cartao(String descricao, String categoria, String login, String senha, String corCartao, String corTexto) {
         this.senha = senha;
         this.categoria = categoria;
         this.login = login;
         this.descricao = descricao;
-        this.cor = cor;
+        this.corCartao = corCartao;
+        this.corTexto = corTexto;
     }
 
     public String getSenha() {
@@ -53,11 +55,19 @@ public class Cartao {
         this.descricao = descricao;
     }
 
-    public String getCor() {
-        return cor;
+    public String getCorCartao() {
+        return corCartao;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
+    public void setCorCartao(String corCartao) {
+        this.corCartao = corCartao;
+    }
+
+    public String getCorTexto() {
+        return corTexto;
+    }
+
+    public void setCorTexto(String corTexto) {
+        this.corTexto = corTexto;
     }
 }
