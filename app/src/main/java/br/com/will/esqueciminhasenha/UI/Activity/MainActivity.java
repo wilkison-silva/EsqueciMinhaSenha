@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.activity_main_listview);
         cartaoList = new ArrayList<>();
 
+
         CartaoController cartaoController = new CartaoController();
         cartaoList = cartaoController.getListaDeCartoesSalvos();
 
@@ -85,5 +86,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
