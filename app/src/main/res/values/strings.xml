@@ -13,6 +13,7 @@
     <string name="cor">Cor</string>
     <string name="mensagem_cartao_salvo">Cartão salvo</string>
     <string name="erro_ao_salvar">Ops. Algo deu errado.</string>
+    <string name="cartao">cartao</string>
 
 
     <string-array name="linguagens">

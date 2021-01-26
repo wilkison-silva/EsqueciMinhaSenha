@@ -1,5 +1,6 @@
 package br.com.will.esqueciminhasenha.UI.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,16 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.Adapter.AdapterListView;
-import br.com.will.esqueciminhasenha.Adapter.AdapterRecyclerView;
+import br.com.will.esqueciminhasenha.UI.Activity.Adapter.AdapterRecyclerView;
 import br.com.will.esqueciminhasenha.Controller.CartaoController;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         criarArquivoNoCelular();
         desativarModoNoturno();
 
-        recyclerView = (RecyclerView) findViewById(R.id.activity_main_recyclerview);
+        recyclerView = findViewById(R.id.activity_main_recyclerview);
         cartaoList = new ArrayList<>();
 
 
@@ -59,16 +57,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, CadastrarCartaoActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1 && resultCode == 2 && data.hasExtra(getString(R.string.cartao))){
+            Cartao cartao = (Cartao) data.getSerializableExtra(getString(R.string.cartao));
+            adapterRecyclerView.adicionaNovoCartao(cartao);
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-
-        adapterRecyclerView.atualizarListaDeCartoes(new CartaoController().getListaDeCartoesSalvos());
     }
 
     private void desativarModoNoturno() {

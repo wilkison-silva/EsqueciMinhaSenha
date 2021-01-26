@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.Adapter;
+package br.com.will.esqueciminhasenha.UI.Activity.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -51,9 +51,8 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         return this.list.size();
     }
 
-    public void atualizarListaDeCartoes(List<Cartao> cartaoList) {
-        this.list.clear();
-        this.list = cartaoList;
+    public void adicionaNovoCartao(Cartao cartao){
+        this.list.add(cartao);
         this.notifyDataSetChanged();
     }
 
