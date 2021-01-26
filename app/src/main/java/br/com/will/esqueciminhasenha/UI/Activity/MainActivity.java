@@ -2,6 +2,7 @@ package br.com.will.esqueciminhasenha.UI.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.will.esqueciminhasenha.Adapter.AdapterListView;
+import br.com.will.esqueciminhasenha.Adapter.AdapterRecyclerView;
 import br.com.will.esqueciminhasenha.Controller.CartaoController;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
@@ -24,8 +26,8 @@ import br.com.will.esqueciminhasenha.Stream.Permissions;
 public class MainActivity extends AppCompatActivity {
 
 
-    private ListView listView;
-    private AdapterListView adapterListView;
+    private RecyclerView recyclerView;
+    private AdapterRecyclerView adapterRecyclerView;
     private List<Cartao> cartaoList;
 
     @Override
@@ -37,15 +39,15 @@ public class MainActivity extends AppCompatActivity {
         criarArquivoNoCelular();
         desativarModoNoturno();
 
-        listView = (ListView) findViewById(R.id.activity_main_listview);
+        recyclerView = (RecyclerView) findViewById(R.id.activity_main_recyclerview);
         cartaoList = new ArrayList<>();
 
 
         CartaoController cartaoController = new CartaoController();
         cartaoList = cartaoController.getListaDeCartoesSalvos();
 
-        adapterListView = new AdapterListView(cartaoList, this);
-        listView.setAdapter(adapterListView);
+        adapterRecyclerView = new AdapterRecyclerView(cartaoList, this);
+        recyclerView.setAdapter(adapterRecyclerView);
 
 
         configurarFlotActionButtonAdicionar();
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        adapterListView.atualizarListaDeCartoes(new CartaoController().getListaDeCartoesSalvos());
+        adapterRecyclerView.atualizarListaDeCartoes(new CartaoController().getListaDeCartoesSalvos());
     }
 
     private void desativarModoNoturno() {
