@@ -1,6 +1,8 @@
 package br.com.will.esqueciminhasenha.Model;
 
-public class Cartao {
+import java.io.Serializable;
+
+public class Cartao implements Serializable {
 
     private String senha;
     private String categoria;

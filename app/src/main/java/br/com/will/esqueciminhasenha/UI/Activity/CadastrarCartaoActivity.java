@@ -3,6 +3,7 @@ package br.com.will.esqueciminhasenha.UI.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -90,6 +91,10 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
                         CartaoController cartaoController = new CartaoController();
                         if (cartaoController.cadastrar(cartao)) {
                             Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent();
+                            intent.putExtra(getString(R.string.cartao), cartao);
+                            setResult(2,intent);
+                            finish();
                         }
                         else {
                             Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
@@ -353,5 +358,8 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         imageButtonCorIndigo.setImageResource(R.drawable.botao_nao_selecionado);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
