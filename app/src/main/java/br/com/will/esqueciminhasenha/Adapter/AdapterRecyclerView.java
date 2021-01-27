@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.UI.Activity.Adapter;
+package br.com.will.esqueciminhasenha.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import br.com.will.esqueciminhasenha.Adapter.Listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
 import br.com.will.esqueciminhasenha.UI.Activity.EditarCartaoActivity;
@@ -24,6 +25,11 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
 
     private List<Cartao> list;
     private Context context;
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public AdapterRecyclerView(List<Cartao> list, Context context) {
         this.list = list;
@@ -59,14 +65,22 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     class CartaoViewHolder extends RecyclerView.ViewHolder {
 
         private final View view;
+        private Cartao cartao;
 
         public CartaoViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.OnItemClick(cartao);
+                }
+            });
+
         }
 
         public void vincularDados(Cartao cartao) {
-
+            this.cartao = cartao;
             mostrarDescricao(view, cartao);
             mostrarCategoria(view, cartao);
             mostrarLogin(view, cartao);
@@ -77,14 +91,6 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         private void configurarCorCortao(View view, Cartao cartao) {
             CardView cardView = view.findViewById(R.id.cardview_simulacao);
             cardView.setCardBackgroundColor(Color.parseColor(cartao.getCorCartao()));
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, cartao.getDescricao(), Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(context, EditarCartaoActivity.class);
-                    context.startActivity(intent);
-                }
-            });
         }
 
         private void mostrarSenha(View view, Cartao cartao) {

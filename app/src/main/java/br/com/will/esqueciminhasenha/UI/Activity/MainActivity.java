@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,7 +15,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.UI.Activity.Adapter.AdapterRecyclerView;
+import javax.security.auth.login.LoginException;
+
+import br.com.will.esqueciminhasenha.Adapter.AdapterRecyclerView;
+import br.com.will.esqueciminhasenha.Adapter.Listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.Controller.CartaoController;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
@@ -45,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
         cartaoList = cartaoController.getListaDeCartoesSalvos();
 
         adapterRecyclerView = new AdapterRecyclerView(cartaoList, this);
+        adapterRecyclerView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void OnItemClick(Cartao cartao) {
+                Log.i("Teste", cartao.getDescricao());
+            }
+        });
         recyclerView.setAdapter(adapterRecyclerView);
 
 

@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.UI.Activity.Adapter;
+package br.com.will.esqueciminhasenha.Adapter;
 
 import android.content.Context;
 import android.content.Intent;

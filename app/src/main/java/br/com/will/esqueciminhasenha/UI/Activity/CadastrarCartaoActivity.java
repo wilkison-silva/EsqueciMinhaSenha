@@ -358,5 +358,8 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         imageButtonCorIndigo.setImageResource(R.drawable.botao_nao_selecionado);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
