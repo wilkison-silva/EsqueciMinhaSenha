@@ -15,6 +15,8 @@ public class CartaoController {
 
     public boolean cadastrar(Cartao cartao) {
         return cartaoDAO.cadastrar(cartao);
+
+
     }
 
     public List<Cartao> getListaDeCartoesSalvos() {
