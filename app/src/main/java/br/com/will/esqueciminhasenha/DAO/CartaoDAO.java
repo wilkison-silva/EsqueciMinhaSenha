@@ -9,9 +9,11 @@ import java.util.List;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.Stream.ConexaoArquivo;
 
+import static br.com.will.esqueciminhasenha.Interfaces.Constantes.NOME_ARQUIVO;
+
 public class CartaoDAO {
 
-    final String NOME_DO_ARQUIVO = "EsqueciMinhaSenha";
+
 
     public List<Cartao> getListaCartoesSalvos() {
 
@@ -19,7 +21,7 @@ public class CartaoDAO {
 
         try {
             String texto = "";
-            ConexaoArquivo.createBufferedReader(NOME_DO_ARQUIVO);
+            ConexaoArquivo.createBufferedReader(NOME_ARQUIVO);
             while ((texto = ConexaoArquivo.readLine()) != null) {
                 if (texto.equals("") == false) {
                     Cartao cartao = new Cartao();
@@ -42,7 +44,7 @@ public class CartaoDAO {
     public boolean cadastrar(Cartao cartao){
         boolean resultado;
         try {
-            ConexaoArquivo.createBufferedWriter(NOME_DO_ARQUIVO, false);
+            ConexaoArquivo.createBufferedWriter(NOME_ARQUIVO, false);
             resultado = ConexaoArquivo.appendLine(getLinhaFormatada(cartao));
             ConexaoArquivo.closeWriter();
             return resultado;
@@ -59,7 +61,7 @@ public class CartaoDAO {
         List<Cartao> cartaoList = getListaCartoesSalvos();
         cartaoList.set(posicao, cartao);
         try {
-            ConexaoArquivo.createBufferedWriter(NOME_DO_ARQUIVO, true);
+            ConexaoArquivo.createBufferedWriter(NOME_ARQUIVO, true);
             ConexaoArquivo.appendLine(getLinhaFormatada(cartaoList.get(0)));
             ConexaoArquivo.closeWriter();
         } catch (IOException e) {

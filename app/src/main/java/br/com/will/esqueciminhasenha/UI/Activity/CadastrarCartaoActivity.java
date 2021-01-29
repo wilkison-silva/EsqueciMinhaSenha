@@ -1,15 +1,12 @@
 package br.com.will.esqueciminhasenha.UI.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,19 +16,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import br.com.will.esqueciminhasenha.Controller.CartaoController;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
-import br.com.will.esqueciminhasenha.Stream.ConexaoArquivo;
 
-import static android.service.autofill.Validators.or;
+import static br.com.will.esqueciminhasenha.Interfaces.Constantes.CHAVE_ALTERAR;
+import static br.com.will.esqueciminhasenha.Interfaces.Constantes.CHAVE_CARTAO;
+import static br.com.will.esqueciminhasenha.Interfaces.Constantes.CHAVE_POSICAO;
+import static br.com.will.esqueciminhasenha.Interfaces.Constantes.POSICAO_INVALIDA;
 
 public class CadastrarCartaoActivity extends AppCompatActivity {
 
-    public static final String COR_TEXTVIEWS_FUNDO_CLARO = "#A1000000";
+    public static final String COR_TEXTVIEWS_FUNDO_CLARO = "#FF000000";
     public static final String COR_TEXTVIEWS_FUNDO_ESCURO = "#EFE9E9";
+
     private CardView cardView;
     private TextView cardviewDescricao;
     private EditText editTextDescricao;
@@ -77,39 +78,54 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         configuraImageButtonCorIndigo();
         configuraButtonSalvar();
 
+        checaSeExisteAlteracao();
+    }
+
+    private void checaSeExisteAlteracao() {
         Intent intent = getIntent();
-        if (intent.hasExtra(getString(R.string.alterar))) {
-            Cartao cartao = (Cartao) intent.getSerializableExtra(getString(R.string.alterar));
+        if (intent.hasExtra(CHAVE_ALTERAR)) {
+            Cartao cartao = (Cartao) intent.getSerializableExtra(CHAVE_ALTERAR);
             carregarInformacoesCartao(cartao);
             novoCartao = false;
-            posicao_adapterRecyclerView = intent.getIntExtra("posicao", -1);
-            Log.i("posicao enviada", ""+posicao_adapterRecyclerView);
+            posicao_adapterRecyclerView = intent.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
         }
     }
 
     private void carregarInformacoesCartao(Cartao cartao) {
 
-        cardviewDescricao = findViewById(R.id.cardview_textview_descricao);
-        editTextDescricao = findViewById(R.id.edittext_descricao);
-        cardviewDescricao.setText(cartao.getDescricao());
-        editTextDescricao.setText(cartao.getDescricao());
+        configuraCamposDescricaoAlterar(cartao);
+        configurarCamposCategoriaAlterar(cartao);
+        configuraCamposLoginAlterar(cartao);
+        configuraCamposSenhaAlterar(cartao);
+        verificaCorCardView(cartao.getCorCartao());
+    }
 
-        spinnerCategoria = findViewById(R.id.spinnerCategoria);
-        cardviewCategoria = findViewById(R.id.cardview_textview_categoria);
-        setSpinnerText(spinnerCategoria, cartao.getCategoria());
-        cardviewCategoria.setText(cartao.getCategoria());
-
-        cardviewLogin = findViewById(R.id.cardview_textview_login);
-        editTextLogin = findViewById(R.id.edittext_login);
-        cardviewLogin.setText(cartao.getLogin());
-        editTextLogin.setText(cartao.getLogin());
-
+    private void configuraCamposSenhaAlterar(Cartao cartao) {
         cardviewSenha = findViewById(R.id.cardview_textview_senha);
         editTextSenha = findViewById(R.id.edittext_senha);
         cardviewSenha.setText(cartao.getSenha());
         editTextSenha.setText(cartao.getSenha());
+    }
 
-        verificaCorCardView(cartao.getCorCartao());
+    private void configuraCamposLoginAlterar(Cartao cartao) {
+        cardviewLogin = findViewById(R.id.cardview_textview_login);
+        editTextLogin = findViewById(R.id.edittext_login);
+        cardviewLogin.setText(cartao.getLogin());
+        editTextLogin.setText(cartao.getLogin());
+    }
+
+    private void configurarCamposCategoriaAlterar(Cartao cartao) {
+        spinnerCategoria = findViewById(R.id.spinnerCategoria);
+        cardviewCategoria = findViewById(R.id.cardview_textview_categoria);
+        setSpinnerText(spinnerCategoria, cartao.getCategoria());
+        cardviewCategoria.setText(cartao.getCategoria());
+    }
+
+    private void configuraCamposDescricaoAlterar(Cartao cartao) {
+        cardviewDescricao = findViewById(R.id.cardview_textview_descricao);
+        editTextDescricao = findViewById(R.id.edittext_descricao);
+        cardviewDescricao.setText(cartao.getDescricao());
+        editTextDescricao.setText(cartao.getDescricao());
     }
 
     public void setSpinnerText(Spinner spin, String text) {
@@ -131,28 +147,36 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
 
                         CartaoController cartaoController = new CartaoController();
                         if (novoCartao){
-                            if (cartaoController.cadastrar(cartao) && novoCartao) {
-                                Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent();
-                                intent.putExtra(getString(R.string.cartao), cartao);
-                                setResult(2, intent);
-                                finish();
-                            } else {
-                                Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
-                            }
+                            cadastraNovoCartao(cartao, cartaoController);
                         }
                         else {
-                            if(cartaoController.editar(cartao, posicao_adapterRecyclerView)){
-                                Toast.makeText(CadastrarCartaoActivity.this, R.string.cartao_alterado, Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent();
-                                intent.putExtra(getString(R.string.cartao), cartao);
-                                intent.putExtra("posicao", posicao_adapterRecyclerView);
-                                setResult(3, intent);
-                                finish();
-                            }
+                            alteraCartaoExistente(cartao, cartaoController);
                         }
                     }
                 } catch (Exception e) {
+                    Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            private void alteraCartaoExistente(Cartao cartao, CartaoController cartaoController) {
+                if(cartaoController.editar(cartao, posicao_adapterRecyclerView)){
+                    Toast.makeText(CadastrarCartaoActivity.this, R.string.cartao_alterado, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent();
+                    intent.putExtra(CHAVE_CARTAO, cartao);
+                    intent.putExtra(CHAVE_POSICAO, posicao_adapterRecyclerView);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
+            }
+
+            private void cadastraNovoCartao(Cartao cartao, CartaoController cartaoController) {
+                if (cartaoController.cadastrar(cartao) && novoCartao) {
+                    Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent();
+                    intent.putExtra(CHAVE_CARTAO, cartao);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                } else {
                     Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
                 }
             }

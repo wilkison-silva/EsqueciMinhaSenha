@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:textColor="#A1000000"
+                    android:textColor="#000000"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -170,16 +170,7 @@
             android:importantForAutofill="no" />
 
 
-        <Button
-            android:id="@+id/button_cadastrar_novo_cartao"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="64dp"
-            android:text="@string/salvar_cartao"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/edittext_senha"
-            app:layout_constraintStart_toStartOf="@+id/edittext_senha"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
 
         <TextView
             android:id="@+id/textView5"
@@ -274,6 +265,24 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:srcCompat="@drawable/botao_nao_selecionado" />
 
+        <Button
+            android:id="@+id/button_cadastrar_novo_cartao"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="64dp"
+            android:text="@string/salvar_cartao"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_senha"
+            app:layout_constraintStart_toStartOf="@+id/edittext_senha"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+<!--
+        <com.skydoves.colorpickerview.ColorPickerView
+            app:layout_constraintTop_toBottomOf="@+id/button_cadastrar_novo_cartao"
+            app:layout_constraintStart_toStartOf="@+id/button_cadastrar_novo_cartao"
+            android:id="@+id/colorPickerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

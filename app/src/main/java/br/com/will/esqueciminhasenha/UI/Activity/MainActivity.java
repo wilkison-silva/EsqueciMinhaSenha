@@ -1,21 +1,21 @@
 package br.com.will.esqueciminhasenha.UI.Activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.security.auth.login.LoginException;
 
 import br.com.will.esqueciminhasenha.Adapter.AdapterRecyclerView;
 import br.com.will.esqueciminhasenha.Adapter.Listener.OnItemClickListener;
@@ -25,7 +25,11 @@ import br.com.will.esqueciminhasenha.R;
 import br.com.will.esqueciminhasenha.Stream.ConexaoArquivo;
 import br.com.will.esqueciminhasenha.Stream.Permissions;
 
+import static br.com.will.esqueciminhasenha.Interfaces.Constantes.*;
+
+
 public class MainActivity extends AppCompatActivity {
+
 
 
     private RecyclerView recyclerView;
@@ -37,20 +41,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-
-
-
-
         verificarPermissoes();
         criarArquivoNoCelular();
         desativarModoNoturno();
 
         recyclerView = findViewById(R.id.activity_main_recyclerview);
         cartaoList = new ArrayList<>();
-
 
         CartaoController cartaoController = new CartaoController();
         cartaoList = cartaoController.getListaDeCartoesSalvos();
@@ -59,11 +55,14 @@ public class MainActivity extends AppCompatActivity {
         adapterRecyclerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void OnItemClick(Cartao cartao, int posicao) {
+                chamaActivityEditarCartao(cartao, posicao);
+            }
+
+            private void chamaActivityEditarCartao(Cartao cartao, int posicao) {
                 Intent intent = new Intent(MainActivity.this, CadastrarCartaoActivity.class);
                 intent.putExtra(getString(R.string.alterar),cartao);
-                intent.putExtra("posicao", posicao);
-
-                startActivityForResult(intent,2);
+                intent.putExtra(getString(R.string.posicao), posicao);
+                startActivityForResult(intent, CHAVE_ALTERA);
             }
         });
         recyclerView.setAdapter(adapterRecyclerView);
@@ -77,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                vaiParaActivityCadastrarCartao();
+            }
+
+            private void vaiParaActivityCadastrarCartao() {
                 Intent intent = new Intent(MainActivity.this, CadastrarCartaoActivity.class);
                 startActivityForResult(intent,1);
             }
@@ -87,13 +90,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1 && resultCode == 2 && data.hasExtra(getString(R.string.cartao))){
-            Cartao cartao = (Cartao) data.getSerializableExtra(getString(R.string.cartao));
-            adapterRecyclerView.adicionaNovoCartao(cartao);
+        if(requestCode == CODIGO_CADASTRAR){
+            if(resultCode == RESULT_OK && data.hasExtra(CHAVE_CARTAO)){
+                atualizaRecyclerViewCadastra(data);
+            }
         }
-        if(requestCode == 2 && resultCode == 3 && data.hasExtra(getString(R.string.cartao))){
-            Cartao cartao = (Cartao) data.getSerializableExtra(getString(R.string.cartao));
-            int posicao = data.getIntExtra("posicao", -1);
+        if(requestCode == CODIGO_ALTERAR) {
+            if(resultCode == Activity.RESULT_OK && data.hasExtra(CHAVE_CARTAO)) {
+                atualizaRecyclerViewAltera(data);
+            }
+        }
+    }
+
+    private void atualizaRecyclerViewCadastra(@NotNull Intent data) {
+        Cartao cartao = (Cartao) data.getSerializableExtra(CHAVE_CARTAO);
+        adapterRecyclerView.adicionaNovoCartao(cartao);
+    }
+
+    private void atualizaRecyclerViewAltera(@NotNull Intent data) {
+        Cartao cartao = (Cartao) data.getSerializableExtra(CHAVE_CARTAO);
+        int posicao = data.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
+        if (posicao > POSICAO_INVALIDA){
             adapterRecyclerView.editarCartao(cartao, posicao);
         }
     }
@@ -115,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void criarArquivoNoCelular(){
         try {
-            ConexaoArquivo.createBufferedReader("EsqueciMinhaSenha");
+            ConexaoArquivo.createBufferedReader(NOME_ARQUIVO);
             ConexaoArquivo.closeReader();
         } catch (Exception e) {
             e.printStackTrace();
