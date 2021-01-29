@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +21,7 @@ import java.util.List;
 import br.com.will.esqueciminhasenha.Adapter.AdapterRecyclerView;
 import br.com.will.esqueciminhasenha.Adapter.Listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.Controller.CartaoController;
+import br.com.will.esqueciminhasenha.ItemHelpers.CartaoItemTouchHelperCallback;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
 import br.com.will.esqueciminhasenha.Stream.ConexaoArquivo;
@@ -44,13 +46,27 @@ public class MainActivity extends AppCompatActivity {
         verificarPermissoes();
         criarArquivoNoCelular();
         desativarModoNoturno();
+        configuraListaDeCartoes();
+        configuraAdapterRecyclerView();
+        configuraRecyclerView();
+        configurarFlotActionButtonAdicionar();
+    }
 
+    private void configuraRecyclerView() {
         recyclerView = findViewById(R.id.activity_main_recyclerview);
-        cartaoList = new ArrayList<>();
+        recyclerView.setAdapter(adapterRecyclerView);
+        ItemTouchHelper itemTouchHelper = new  ItemTouchHelper(new CartaoItemTouchHelperCallback(adapterRecyclerView));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
+    }
+
+    private void configuraListaDeCartoes() {
         CartaoController cartaoController = new CartaoController();
+        cartaoList = new ArrayList<>();
         cartaoList = cartaoController.getListaDeCartoesSalvos();
+    }
 
+    private void configuraAdapterRecyclerView() {
         adapterRecyclerView = new AdapterRecyclerView(cartaoList, this);
         adapterRecyclerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -65,10 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, CHAVE_ALTERA);
             }
         });
-        recyclerView.setAdapter(adapterRecyclerView);
-
-
-        configurarFlotActionButtonAdicionar();
     }
 
     private void configurarFlotActionButtonAdicionar() {

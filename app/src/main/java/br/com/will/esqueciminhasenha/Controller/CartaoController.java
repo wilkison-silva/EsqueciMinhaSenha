@@ -15,8 +15,6 @@ public class CartaoController {
 
     public boolean cadastrar(Cartao cartao) {
         return cartaoDAO.cadastrar(cartao);
-
-
     }
 
     public List<Cartao> getListaDeCartoesSalvos() {
@@ -25,6 +23,10 @@ public class CartaoController {
 
     public boolean editar(Cartao cartao, int posicao){
         return cartaoDAO.editar(cartao,posicao);
+    }
+
+    public boolean excluir(int posicao){
+        return false;
     }
 
 }
