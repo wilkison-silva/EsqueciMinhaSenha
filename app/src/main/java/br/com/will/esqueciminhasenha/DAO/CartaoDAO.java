@@ -42,7 +42,7 @@ public class CartaoDAO {
     public boolean cadastrar(Cartao cartao){
         boolean resultado;
         try {
-            ConexaoArquivo.createBufferedWriter(NOME_DO_ARQUIVO);
+            ConexaoArquivo.createBufferedWriter(NOME_DO_ARQUIVO, false);
             resultado = ConexaoArquivo.appendLine(getLinhaFormatada(cartao));
             ConexaoArquivo.closeWriter();
             return resultado;
@@ -51,16 +51,30 @@ public class CartaoDAO {
         }
     }
 
-    public boolean atualizar(Cartao cartao){
-        return false;
-    }
-
     public boolean excluir(Cartao cartao){
         return false;
     }
 
-    public boolean editar(Cartao cartao){
-        return false;
+    public boolean editar(Cartao cartao, int posicao){
+        List<Cartao> cartaoList = getListaCartoesSalvos();
+        cartaoList.set(posicao, cartao);
+        try {
+            ConexaoArquivo.createBufferedWriter(NOME_DO_ARQUIVO, true);
+            ConexaoArquivo.appendLine(getLinhaFormatada(cartaoList.get(0)));
+            ConexaoArquivo.closeWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try{
+            for(int i = 1; i < cartaoList.size(); i++){
+                cadastrar(cartaoList.get(i));
+            }
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
     private String getLinhaFormatada(Cartao cartao){

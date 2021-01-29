@@ -68,15 +68,15 @@ public class ConexaoArquivo {
     /***********************************************************************
      *                      MÉTODOS DE ESCRITA                             *
      **********************************************************************/
-    public static boolean createBufferedWriter(String nomeArquivo) {
+    public static boolean createBufferedWriter(String nomeArquivo, boolean deleteOldFile) {
 
         try {
             if (checkSdCard()) {
                 File file = new File(Environment.getExternalStorageDirectory() + "/" + nomeArquivo + ".txt");
-                if (file.exists() == false){
+                if (file.exists() == false) {
                     file.createNewFile();
                 }
-                bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true), "ISO-8859-1"));
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,!deleteOldFile), "ISO-8859-1"));
                 return true;
             }
         } catch (Exception e) {
@@ -85,11 +85,11 @@ public class ConexaoArquivo {
         finally {
             return false;
         }
-
     }
 
-    public static void write(String text) throws IOException {
+    public static boolean write(String text) throws IOException {
         bufferedWriter.write(text);
+        return true;
     }
 
     public static boolean appendLine(String line) throws IOException{

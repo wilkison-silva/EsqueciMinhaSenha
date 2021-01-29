@@ -62,6 +62,11 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         this.notifyDataSetChanged();
     }
 
+    public void editarCartao(Cartao cartao, int posicao){
+        this.list.set(posicao, cartao);
+        notifyDataSetChanged();
+    }
+
     class CartaoViewHolder extends RecyclerView.ViewHolder {
 
         private final View view;
@@ -73,7 +78,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.OnItemClick(cartao);
+                    onItemClickListener.OnItemClick(cartao, getAdapterPosition());
                 }
             });
 

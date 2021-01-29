@@ -14,6 +14,8 @@
     <string name="mensagem_cartao_salvo">Cartão salvo</string>
     <string name="erro_ao_salvar">Ops. Algo deu errado.</string>
     <string name="cartao">cartao</string>
+    <string name="alterar">ALTERAR</string>
+    <string name="cartao_alterado">Cartão alterado.</string>
 
 
     <string-array name="linguagens">

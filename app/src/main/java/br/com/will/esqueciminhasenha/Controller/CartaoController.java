@@ -10,19 +10,19 @@ public class CartaoController {
     CartaoDAO cartaoDAO;
 
     public CartaoController() {
-
         cartaoDAO = new CartaoDAO();
-
     }
 
-    public boolean cadastrar(Cartao cartao){
-
+    public boolean cadastrar(Cartao cartao) {
         return cartaoDAO.cadastrar(cartao);
-
     }
 
-    public List<Cartao> getListaDeCartoesSalvos(){
+    public List<Cartao> getListaDeCartoesSalvos() {
         return cartaoDAO.getListaCartoesSalvos();
+    }
+
+    public boolean editar(Cartao cartao, int posicao){
+        return cartaoDAO.editar(cartao,posicao);
     }
 
 }

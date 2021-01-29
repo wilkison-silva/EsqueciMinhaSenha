@@ -51,8 +51,12 @@ public class MainActivity extends AppCompatActivity {
         adapterRecyclerView = new AdapterRecyclerView(cartaoList, this);
         adapterRecyclerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void OnItemClick(Cartao cartao) {
-                Log.i("Teste", cartao.getDescricao());
+            public void OnItemClick(Cartao cartao, int posicao) {
+                Intent intent = new Intent(MainActivity.this, CadastrarCartaoActivity.class);
+                intent.putExtra(getString(R.string.alterar),cartao);
+                intent.putExtra("posicao", posicao);
+
+                startActivityForResult(intent,2);
             }
         });
         recyclerView.setAdapter(adapterRecyclerView);
@@ -79,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 1 && resultCode == 2 && data.hasExtra(getString(R.string.cartao))){
             Cartao cartao = (Cartao) data.getSerializableExtra(getString(R.string.cartao));
             adapterRecyclerView.adicionaNovoCartao(cartao);
+        }
+        if(requestCode == 2 && resultCode == 3 && data.hasExtra(getString(R.string.cartao))){
+            Cartao cartao = (Cartao) data.getSerializableExtra(getString(R.string.cartao));
+            int posicao = data.getIntExtra("posicao", -1);
+            adapterRecyclerView.editarCartao(cartao, posicao);
         }
     }
 
