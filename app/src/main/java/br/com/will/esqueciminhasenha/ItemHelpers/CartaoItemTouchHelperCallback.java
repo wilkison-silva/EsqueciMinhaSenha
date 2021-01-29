@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.will.esqueciminhasenha.Adapter.AdapterRecyclerView;
 import br.com.will.esqueciminhasenha.Controller.CartaoController;
-import br.com.will.esqueciminhasenha.Model.Cartao;
 
 public class CartaoItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
@@ -20,12 +19,15 @@ public class CartaoItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         int direcaoDeslize = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-
-        return makeMovementFlags(0,direcaoDeslize);
+        int direcaoArrastar = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+        return makeMovementFlags(direcaoArrastar,direcaoDeslize);
     }
 
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+        int posicaoInicial = viewHolder.getAdapterPosition();
+        int posicaoFinal = target.getAdapterPosition();
+        adapterRecyclerView.troca(posicaoInicial, posicaoFinal);
         return false;
     }
 

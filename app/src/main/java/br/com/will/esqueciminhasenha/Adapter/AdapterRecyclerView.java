@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import br.com.will.esqueciminhasenha.Adapter.Listener.OnItemClickListener;
@@ -69,8 +71,12 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
 
     public void excluirCartao(int posicao){
         this.list.remove(posicao);
-        notifyDataSetChanged();
-        Log.i("Teste", "Tamanho da lista na memória: "+getItemCount());
+        notifyItemRemoved(posicao);
+    }
+
+    public void troca(int posicaoInicial, int posicaoFinal) {
+        Collections.swap(this.list,posicaoInicial,posicaoFinal);
+        notifyItemMoved(posicaoInicial, posicaoFinal);
     }
 
     class CartaoViewHolder extends RecyclerView.ViewHolder {
