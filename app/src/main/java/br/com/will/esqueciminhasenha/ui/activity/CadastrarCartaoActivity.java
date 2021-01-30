@@ -1,15 +1,11 @@
-package br.com.will.esqueciminhasenha.UI.Activity;
+package br.com.will.esqueciminhasenha.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,19 +15,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
-import br.com.will.esqueciminhasenha.Controller.CartaoController;
-import br.com.will.esqueciminhasenha.Model.Cartao;
+import org.jetbrains.annotations.NotNull;
+
+import br.com.will.esqueciminhasenha.controller.CartaoController;
+import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.R;
-import br.com.will.esqueciminhasenha.Stream.ConexaoArquivo;
 
-import static android.service.autofill.Validators.or;
+import static br.com.will.esqueciminhasenha.interfaces.Constantes.CHAVE_CARTAO;
+import static br.com.will.esqueciminhasenha.interfaces.Constantes.CHAVE_POSICAO;
+import static br.com.will.esqueciminhasenha.interfaces.Constantes.POSICAO_INVALIDA;
+
 
 public class CadastrarCartaoActivity extends AppCompatActivity {
 
-    public static final String COR_TEXTVIEWS_FUNDO_CLARO = "#A1000000";
+    public static final String COR_TEXTVIEWS_FUNDO_CLARO = "#FF000000";
     public static final String COR_TEXTVIEWS_FUNDO_ESCURO = "#EFE9E9";
+
     private CardView cardView;
     private TextView cardviewDescricao;
     private EditText editTextDescricao;
@@ -48,20 +50,29 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     private ImageButton imageButtonCorAmarelo;
     private ImageButton imageButtonCorRosa;
     private ImageButton imageButtonCorIndigo;
+    @SuppressWarnings("FieldCanBeLocal")
     private Button buttonCadastrarNovoCartao;
 
-    private Cartao cartao;
     private String corCartao = null;
     private String corTexto = null;
+    private boolean novoCartao = true;
+    private int posicao_adapterRecyclerView;
+    CartaoController cartaoController;
+    Cartao cartaoRecebido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_cartao);
-
-        setTitle(getString(R.string.adicionar_novo_cartao));
         cardView = findViewById(R.id.cardview_simulacao);
+        cartaoController = new CartaoController(this);
 
+        configuraComponentesDeEntrada();
+        checaSeExisteAlteracao();
+
+    }
+
+    private void configuraComponentesDeEntrada() {
         configuraEditTextDescricao();
         configurarSpinnerCategoria();
         configuraEditTextLogin();
@@ -74,9 +85,65 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         configuraImageButtonCorAmarelo();
         configuraImageButtonCorRosa();
         configuraImageButtonCorIndigo();
-
         configuraButtonSalvar();
+    }
 
+    private void checaSeExisteAlteracao() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(CHAVE_CARTAO)) {
+            cartaoRecebido = (Cartao) intent.getSerializableExtra(CHAVE_CARTAO);
+            carregarInformacoesCartao(cartaoRecebido);
+            novoCartao = false;
+            posicao_adapterRecyclerView = intent.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
+            setTitle(getString(R.string.titulo_alterando_cartao));
+        } else {
+            setTitle(getString(R.string.adicionar_novo_cartao));
+        }
+    }
+
+    private void carregarInformacoesCartao(Cartao cartao) {
+
+        configuraCamposDescricaoAlterar(cartao);
+        configurarCamposCategoriaAlterar(cartao);
+        configuraCamposLoginAlterar(cartao);
+        configuraCamposSenhaAlterar(cartao);
+        verificaCorCardView(cartao.getCorCartao());
+    }
+
+    private void configuraCamposSenhaAlterar(Cartao cartao) {
+        cardviewSenha = findViewById(R.id.cardview_textview_senha);
+        editTextSenha = findViewById(R.id.edittext_senha);
+        cardviewSenha.setText(cartao.getSenha());
+        editTextSenha.setText(cartao.getSenha());
+    }
+
+    private void configuraCamposLoginAlterar(Cartao cartao) {
+        cardviewLogin = findViewById(R.id.cardview_textview_login);
+        editTextLogin = findViewById(R.id.edittext_login);
+        cardviewLogin.setText(cartao.getLogin());
+        editTextLogin.setText(cartao.getLogin());
+    }
+
+    private void configurarCamposCategoriaAlterar(Cartao cartao) {
+        spinnerCategoria = findViewById(R.id.spinnerCategoria);
+        cardviewCategoria = findViewById(R.id.cardview_textview_categoria);
+        setSpinnerText(spinnerCategoria, cartao.getCategoria());
+        cardviewCategoria.setText(cartao.getCategoria());
+    }
+
+    private void configuraCamposDescricaoAlterar(Cartao cartao) {
+        cardviewDescricao = findViewById(R.id.cardview_textview_descricao);
+        editTextDescricao = findViewById(R.id.edittext_descricao);
+        cardviewDescricao.setText(cartao.getDescricao());
+        editTextDescricao.setText(cartao.getDescricao());
+    }
+
+    public void setSpinnerText(Spinner spin, String text) {
+        for (int i = 0; i < spin.getAdapter().getCount(); i++) {
+            if (spin.getAdapter().getItem(i).toString().contains(text)) {
+                spin.setSelection(i);
+            }
+        }
     }
 
     private void configuraButtonSalvar() {
@@ -84,56 +151,62 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         buttonCadastrarNovoCartao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    if(verificarPreenchimentoDosCampos() == true) {
-                        Cartao cartao = getDadosFormulario();
-
-                        CartaoController cartaoController = new CartaoController();
-                        if (cartaoController.cadastrar(cartao)) {
-                            Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent();
-                            intent.putExtra(getString(R.string.cartao), cartao);
-                            setResult(2,intent);
-                            finish();
-                        }
-                        else {
-                            Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
-                        }
+                if (verificarPreenchimentoDosCampos()) {
+                    Cartao cartao = getDadosFormulario();
+                    if (novoCartao) {
+                        cadastraNovoCartao(cartao);
+                    } else {
+                        cartao.setId(cartaoRecebido.getId());
+                        alteraCartaoExistente(cartao);
                     }
-                } catch (Exception e) {
-                    Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
                 }
+            }
+
+            private void alteraCartaoExistente(Cartao cartao) {
+                cartaoController.editar(cartao);
+                Toast.makeText(CadastrarCartaoActivity.this, R.string.cartao_alterado, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+                intent.putExtra(CHAVE_CARTAO, cartao);
+                intent.putExtra(CHAVE_POSICAO, posicao_adapterRecyclerView);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+
+            private void cadastraNovoCartao(@NotNull Cartao cartao) {
+                cartaoController.cadastrar(cartao);
+                Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
+                cartao = cartaoController.ultimoRegistro();
+                Intent intent = new Intent();
+                intent.putExtra(CHAVE_CARTAO, cartao);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
     }
 
 
-    private boolean verificarPreenchimentoDosCampos(){
+    private boolean verificarPreenchimentoDosCampos() {
 
-        if (editTextDescricao.getText().toString().equals("")){
-            Toast.makeText(CadastrarCartaoActivity.this, "Descrição não pode ser vazia",Toast.LENGTH_LONG).show();
+        if (editTextDescricao.getText().toString().equals("")) {
+            Toast.makeText(CadastrarCartaoActivity.this, "Descrição não pode ser vazia", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else if (spinnerCategoria.getSelectedItem().toString().equals("")){
-            Toast.makeText(CadastrarCartaoActivity.this, "Selecione uma categoria",Toast.LENGTH_LONG).show();
+        } else if (spinnerCategoria.getSelectedItem().toString().equals("")) {
+            Toast.makeText(CadastrarCartaoActivity.this, "Selecione uma categoria", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else if (editTextLogin.getText().toString().equals("")){
-            Toast.makeText(CadastrarCartaoActivity.this, "Preencha seu login de acesso",Toast.LENGTH_LONG).show();
+        } else if (editTextLogin.getText().toString().equals("")) {
+            Toast.makeText(CadastrarCartaoActivity.this, "Preencha seu login de acesso", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else if (editTextSenha.getText().toString().equals("")){
-            Toast.makeText(CadastrarCartaoActivity.this, "Informe a senha de acesso",Toast.LENGTH_LONG).show();
+        } else if (editTextSenha.getText().toString().equals("")) {
+            Toast.makeText(CadastrarCartaoActivity.this, "Informe a senha de acesso", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else if ((corCartao == null) && (corTexto == null)){
-            Toast.makeText(CadastrarCartaoActivity.this, "Selecione uma cor na paleta",Toast.LENGTH_LONG).show();
+        } else if ((corCartao == null) && (corTexto == null)) {
+            Toast.makeText(CadastrarCartaoActivity.this, "Selecione uma cor na paleta", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
     }
 
-    private Cartao getDadosFormulario(){
+    private Cartao getDadosFormulario() {
         Cartao cartao = new Cartao();
 
         cartao.setDescricao(editTextDescricao.getText().toString());
@@ -148,72 +221,37 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
 
     private void configuraImageButtonCorIndigo() {
         imageButtonCorIndigo = findViewById(R.id.imagebutton_cor_indigo);
-        imageButtonCorIndigo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(7);
-            }
-        });
+        imageButtonCorIndigo.setOnClickListener(v -> configurarCorCardView(7));
     }
 
     private void configuraImageButtonCorRosa() {
         imageButtonCorRosa = findViewById(R.id.imagebutton_cor_rosa);
-        imageButtonCorRosa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(6);
-            }
-        });
+        imageButtonCorRosa.setOnClickListener(v -> configurarCorCardView(6));
     }
 
     private void configuraImageButtonCorAmarelo() {
         imageButtonCorAmarelo = findViewById(R.id.imagebutton_cor_amarelo);
-        imageButtonCorAmarelo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(5);
-            }
-        });
+        imageButtonCorAmarelo.setOnClickListener(v -> configurarCorCardView(5));
     }
 
     private void configuraImageButtonCorCiano() {
         imageButtonCorCiano = findViewById(R.id.imagebutton_cor_ciano);
-        imageButtonCorCiano.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(4);
-            }
-        });
+        imageButtonCorCiano.setOnClickListener(v -> configurarCorCardView(4));
     }
 
     private void configuraImageButtonCorVerdeClaro() {
         imageButtonCorVerdeClaro = findViewById(R.id.imagebutton_Cor_verde_claro);
-        imageButtonCorVerdeClaro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(3);
-            }
-        });
+        imageButtonCorVerdeClaro.setOnClickListener(v -> configurarCorCardView(3));
     }
 
     private void configuraImageButtonCorVermelho() {
         imageButtonCorVermelho = findViewById(R.id.imagebutton_cor_vermelho);
-        imageButtonCorVermelho.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(2);
-            }
-        });
+        imageButtonCorVermelho.setOnClickListener(v -> configurarCorCardView(2));
     }
 
     private void configuraImageButtonCorLaranja() {
         imageButtonCorLaranja = findViewById(R.id.imagebutton_cor_laranja);
-        imageButtonCorLaranja.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(1);
-            }
-        });
+        imageButtonCorLaranja.setOnClickListener(v -> configurarCorCardView(1));
     }
 
     private void configuraEditTextSenha() {
@@ -298,6 +336,33 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         });
     }
 
+    private void verificaCorCardView(String corCardView) {
+
+        switch (corCardView) {
+            case "#FF8C00":
+                configurarCorCardView(1);
+                break;
+            case "#8B0000":
+                configurarCorCardView(2);
+                break;
+            case "#1DE3AA":
+                configurarCorCardView(3);
+                break;
+            case "#70FFFF":
+                configurarCorCardView(4);
+                break;
+            case "#FFDE16":
+                configurarCorCardView(5);
+                break;
+            case "#FF1493":
+                configurarCorCardView(6);
+                break;
+            case "#4B0082":
+                configurarCorCardView(7);
+                break;
+        }
+    }
+
     private void configurarCorCardView(int idImageButton) {
         ResetarImageButtons();
         if (idImageButton == 1) {
@@ -336,8 +401,6 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             corCartao = "#4B0082";
             configurarCorTextViews(COR_TEXTVIEWS_FUNDO_ESCURO);
         }
-
-
     }
 
     private void configurarCorTextViews(String cor) {
@@ -358,8 +421,4 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         imageButtonCorIndigo.setImageResource(R.drawable.botao_nao_selecionado);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

@@ -1,30 +1,28 @@
-package br.com.will.esqueciminhasenha.Adapter;
+package br.com.will.esqueciminhasenha.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.Adapter.Listener.OnItemClickListener;
-import br.com.will.esqueciminhasenha.Model.Cartao;
+import br.com.will.esqueciminhasenha.ui.adapter.listener.OnItemClickListener;
+import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.R;
-import br.com.will.esqueciminhasenha.UI.Activity.EditarCartaoActivity;
 
 public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerView.CartaoViewHolder> {
 
 
-    private List<Cartao> list;
-    private Context context;
+    private final List<Cartao> list;
+    private final Context context;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -47,9 +45,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     public void onBindViewHolder(@NonNull CartaoViewHolder holder, int position) {
 
         Cartao cartao = this.list.get(position);
-
-        CartaoViewHolder cartaoViewHolder = holder;
-        cartaoViewHolder.vincularDados(cartao);
+        holder.vincularDados(cartao);
     }
 
     @Override
@@ -62,6 +58,25 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         this.notifyDataSetChanged();
     }
 
+    public Cartao getCartao(int posicao){
+        return list.get(posicao);
+    }
+
+    public void editarCartao(Cartao cartao, int posicao){
+        this.list.set(posicao, cartao);
+        notifyDataSetChanged();
+    }
+
+    public void excluirCartao(int posicao){
+        this.list.remove(posicao);
+        notifyItemRemoved(posicao);
+    }
+
+    public void troca(int posicaoInicial, int posicaoFinal) {
+        Collections.swap(this.list,posicaoInicial,posicaoFinal);
+        notifyItemMoved(posicaoInicial, posicaoFinal);
+    }
+
     class CartaoViewHolder extends RecyclerView.ViewHolder {
 
         private final View view;
@@ -70,12 +85,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         public CartaoViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.OnItemClick(cartao);
-                }
-            });
+            itemView.setOnClickListener(v -> onItemClickListener.OnItemClick(cartao, getAdapterPosition()));
 
         }
 

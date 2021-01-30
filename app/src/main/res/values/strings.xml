@@ -1,3 +1,4 @@
+<!--suppress CheckTagEmptyBody -->
 <resources>
     <string name="app_name">Esqueci Minha Senha</string>
     <string name="exemplo_pesquisa">Ex: Spotify</string>
@@ -12,12 +13,13 @@
     <string name="adicionar_novo_cartao">Adicionar novo cartão</string>
     <string name="cor">Cor</string>
     <string name="mensagem_cartao_salvo">Cartão salvo</string>
-    <string name="erro_ao_salvar">Ops. Algo deu errado.</string>
-    <string name="cartao">cartao</string>
+    <string name="cartao_alterado">Cartão alterado.</string>
+    <string name="titulo_alterando_cartao">Alterando cartão</string>
 
 
     <string-array name="linguagens">
         <item></item>
+        <item>Senha de app</item>
         <item>Site de compras</item>
         <item>Site de educação</item>
         <item>Trabalho</item>
