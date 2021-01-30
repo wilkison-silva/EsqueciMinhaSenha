@@ -2,25 +2,21 @@ package br.com.will.esqueciminhasenha.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import br.com.will.esqueciminhasenha.Adapter.Listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
-import br.com.will.esqueciminhasenha.UI.Activity.CadastrarCartaoActivity;
 
 public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerView.CartaoViewHolder> {
 
@@ -49,7 +45,6 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     public void onBindViewHolder(@NonNull CartaoViewHolder holder, int position) {
 
         Cartao cartao = this.list.get(position);
-
         CartaoViewHolder cartaoViewHolder = holder;
         cartaoViewHolder.vincularDados(cartao);
     }

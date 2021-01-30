@@ -1,7 +1,6 @@
 package br.com.will.esqueciminhasenha.Controller;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.List;
 
@@ -18,7 +17,6 @@ public class CartaoController {
     }
 
     public void cadastrar(Cartao cartao) {
-        Log.i("cartão", "cartão salvar controller id: " + cartao.getId());
         roomCartaoDAO.salvar(cartao);
     }
 
@@ -27,12 +25,10 @@ public class CartaoController {
     }
 
     public void editar(Cartao cartao) {
-        Log.i("cartão", "cartão editar id: " + cartao.getId());
         roomCartaoDAO.editar(cartao);
     }
 
     public void excluir(Cartao cartao) {
-        Log.i("cartão", "cartão excluir id: " + cartao.getId());
         roomCartaoDAO.deletar(cartao);
     }
 

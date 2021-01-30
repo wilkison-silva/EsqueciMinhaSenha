@@ -25,7 +25,6 @@ import br.com.will.esqueciminhasenha.Controller.CartaoController;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
 
-import static br.com.will.esqueciminhasenha.Interfaces.Constantes.CHAVE_ALTERAR;
 import static br.com.will.esqueciminhasenha.Interfaces.Constantes.CHAVE_CARTAO;
 import static br.com.will.esqueciminhasenha.Interfaces.Constantes.CHAVE_POSICAO;
 import static br.com.will.esqueciminhasenha.Interfaces.Constantes.POSICAO_INVALIDA;
@@ -64,10 +63,15 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_cartao);
-
-        setTitle(getString(R.string.adicionar_novo_cartao));
         cardView = findViewById(R.id.cardview_simulacao);
+        cartaoController = new CartaoController(this);
 
+        configuraComponentesDeEntrada();
+        checaSeExisteAlteracao();
+
+    }
+
+    private void configuraComponentesDeEntrada() {
         configuraEditTextDescricao();
         configurarSpinnerCategoria();
         configuraEditTextLogin();
@@ -81,24 +85,18 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         configuraImageButtonCorRosa();
         configuraImageButtonCorIndigo();
         configuraButtonSalvar();
-
-        checaSeExisteAlteracao();
-
-        cartaoController = new CartaoController(this);
     }
 
     private void checaSeExisteAlteracao() {
         Intent intent = getIntent();
         if (intent.hasExtra(CHAVE_CARTAO)) {
-
             cartaoRecebido = (Cartao) intent.getSerializableExtra(CHAVE_CARTAO);
-            Log.i("cartão", "cartão recebido: " + cartaoRecebido.getId() +  "-" + cartaoRecebido.getDescricao());
             carregarInformacoesCartao(cartaoRecebido);
             novoCartao = false;
             posicao_adapterRecyclerView = intent.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
-        }
-        else{
-            Log.i("cartão", "Nada recebido");
+            setTitle(getString(R.string.titulo_alterando_cartao));
+        } else {
+            setTitle(getString(R.string.adicionar_novo_cartao));
         }
     }
 
@@ -152,17 +150,15 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         buttonCadastrarNovoCartao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (verificarPreenchimentoDosCampos() == true) {
-
-                        if (novoCartao) {
-                            Cartao cartao = getDadosFormulario();
-                            cadastraNovoCartao(cartao);
-                        } else {
-                            Cartao cartao = getDadosFormulario();
-                            cartao.setId(cartaoRecebido.getId());
-                            alteraCartaoExistente(cartao);
-                        }
+                if (verificarPreenchimentoDosCampos() == true) {
+                    Cartao cartao = getDadosFormulario();
+                    if (novoCartao) {
+                        cadastraNovoCartao(cartao);
+                    } else {
+                        cartao.setId(cartaoRecebido.getId());
+                        alteraCartaoExistente(cartao);
                     }
+                }
             }
 
             private void alteraCartaoExistente(Cartao cartao) {
@@ -176,7 +172,6 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             }
 
             private void cadastraNovoCartao(@NotNull Cartao cartao) {
-                Log.i("cartão", "cartão salvar activity id: " + cartao.getId());
                 cartaoController.cadastrar(cartao);
                 Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
                 cartao = cartaoController.ultimoRegistro();

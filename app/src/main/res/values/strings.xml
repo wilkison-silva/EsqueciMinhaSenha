@@ -17,6 +17,7 @@
     <string name="alterar">ALTERAR</string>
     <string name="cartao_alterado">Cartão alterado.</string>
     <string name="posicao">posicao</string>
+    <string name="titulo_alterando_cartao">Alterando cartão</string>
 
 
     <string-array name="linguagens">

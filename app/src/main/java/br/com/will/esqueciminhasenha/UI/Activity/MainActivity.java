@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
         CartaoController cartaoController = new CartaoController(this);
         cartaoList = new ArrayList<>();
         cartaoList = cartaoController.getListaDeCartoesSalvos();
-        for(int i = 0; i < cartaoList.size(); i++){
-            Log.i("cartão no banco", "cartão id: "+ cartaoList.get(i).getId());
-        }
     }
 
     private void configuraAdapterRecyclerView() {
@@ -78,11 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
             private void chamaActivityEditarCartao(Cartao cartao, int posicao) {
                 Intent intent = new Intent(MainActivity.this, CadastrarCartaoActivity.class);
-                Log.i("cartão", "cartão id no banco clicado: " + cartao.getId());
-                Log.i("cartão", "cartão id na lista clicado: " + posicao);
                 intent.putExtra(CHAVE_CARTAO,cartao);
                 intent.putExtra(CHAVE_POSICAO, posicao);
-                startActivityForResult(intent, CHAVE_ALTERA);
+                startActivityForResult(intent, CODIGO_ALTERAR);
             }
         });
     }
@@ -106,14 +101,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CODIGO_CADASTRAR){
-            if(resultCode == RESULT_OK && data.hasExtra(CHAVE_CARTAO)){
-                atualizaRecyclerViewCadastra(data);
-            }
-        }
+        verificaRequestDeCadastro(requestCode, resultCode, data);
+        verificaRequestDeAlteracao(requestCode, resultCode, data);
+    }
+
+    private void verificaRequestDeAlteracao(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == CODIGO_ALTERAR) {
             if(resultCode == Activity.RESULT_OK && data.hasExtra(CHAVE_CARTAO)) {
                 atualizaRecyclerViewAltera(data);
+            }
+        }
+    }
+
+    private void verificaRequestDeCadastro(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == CODIGO_CADASTRAR){
+            if(resultCode == RESULT_OK && data.hasExtra(CHAVE_CARTAO)){
+                atualizaRecyclerViewCadastra(data);
             }
         }
     }
@@ -126,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
     private void atualizaRecyclerViewAltera(@NotNull Intent data) {
         Cartao cartao = (Cartao) data.getSerializableExtra(CHAVE_CARTAO);
         int posicao = data.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
-        Log.i("cartão","posição recebida: "+ posicao);
         if (posicao > POSICAO_INVALIDA){
             adapterRecyclerView.editarCartao(cartao, posicao);
         }

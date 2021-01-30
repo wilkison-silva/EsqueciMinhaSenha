@@ -25,8 +25,8 @@ public class CartaoItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         int direcaoDeslize = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-        int direcaoArrastar = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-        return makeMovementFlags(direcaoArrastar,direcaoDeslize);
+        //int direcaoArrastar = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+        return makeMovementFlags(0,direcaoDeslize);
     }
 
     @Override
@@ -40,11 +40,11 @@ public class CartaoItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int posicao = viewHolder.getAdapterPosition();
-        Log.i("cartão","cartão da lista a ser excluido: " + posicao);
-        cartaoController = new CartaoController(context);
         Cartao cartao = adapterRecyclerView.getCartao(posicao);
-        Log.i("cartão","cartão do banco a ser excluido: " + cartao.getId());
+
+        cartaoController = new CartaoController(context);
         cartaoController.excluir(cartao);
+
         adapterRecyclerView.excluirCartao(posicao);
     }
 }
