@@ -1,19 +1,24 @@
 package br.com.will.esqueciminhasenha.ItemHelpers;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.will.esqueciminhasenha.Adapter.AdapterRecyclerView;
 import br.com.will.esqueciminhasenha.Controller.CartaoController;
+import br.com.will.esqueciminhasenha.Model.Cartao;
 
 public class CartaoItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private AdapterRecyclerView adapterRecyclerView;
     private CartaoController cartaoController;
+    private Context context;
 
-    public CartaoItemTouchHelperCallback(AdapterRecyclerView adapterRecyclerView) {
+    public CartaoItemTouchHelperCallback(AdapterRecyclerView adapterRecyclerView, Context context) {
         this.adapterRecyclerView = adapterRecyclerView;
+        this.context = context;
     }
 
     @Override
@@ -34,8 +39,9 @@ public class CartaoItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int posicao = viewHolder.getAdapterPosition();
-        cartaoController = new CartaoController();
-        cartaoController.excluir(posicao);
+        cartaoController = new CartaoController(context);
+        Cartao cartao = adapterRecyclerView.getCartao(posicao);
+        cartaoController.excluir(cartao);
         adapterRecyclerView.excluirCartao(posicao);
     }
 }

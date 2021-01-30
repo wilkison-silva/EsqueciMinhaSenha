@@ -3,6 +3,7 @@ package br.com.will.esqueciminhasenha.UI.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -24,7 +25,6 @@ import br.com.will.esqueciminhasenha.Controller.CartaoController;
 import br.com.will.esqueciminhasenha.ItemHelpers.CartaoItemTouchHelperCallback;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
-import br.com.will.esqueciminhasenha.Stream.ConexaoArquivo;
 import br.com.will.esqueciminhasenha.Stream.Permissions;
 
 import static br.com.will.esqueciminhasenha.Interfaces.Constantes.*;
@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         verificarPermissoes();
-        criarArquivoNoCelular();
         desativarModoNoturno();
         configuraListaDeCartoes();
         configuraAdapterRecyclerView();
@@ -55,15 +54,18 @@ public class MainActivity extends AppCompatActivity {
     private void configuraRecyclerView() {
         recyclerView = findViewById(R.id.activity_main_recyclerview);
         recyclerView.setAdapter(adapterRecyclerView);
-        ItemTouchHelper itemTouchHelper = new  ItemTouchHelper(new CartaoItemTouchHelperCallback(adapterRecyclerView));
+        ItemTouchHelper itemTouchHelper = new  ItemTouchHelper(new CartaoItemTouchHelperCallback(adapterRecyclerView, this));
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
     }
 
     private void configuraListaDeCartoes() {
-        CartaoController cartaoController = new CartaoController();
+        CartaoController cartaoController = new CartaoController(this);
         cartaoList = new ArrayList<>();
         cartaoList = cartaoController.getListaDeCartoesSalvos();
+        for(int i = 0; i < cartaoList.size(); i++){
+            Log.i("cartão no banco", "cartão id: "+ cartaoList.get(i).getId());
+        }
     }
 
     private void configuraAdapterRecyclerView() {
@@ -76,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
             private void chamaActivityEditarCartao(Cartao cartao, int posicao) {
                 Intent intent = new Intent(MainActivity.this, CadastrarCartaoActivity.class);
-                intent.putExtra(getString(R.string.alterar),cartao);
-                intent.putExtra(getString(R.string.posicao), posicao);
+                Log.i("cartão", "cartão id no banco clicado: " + cartao.getId());
+                Log.i("cartão", "cartão id na lista clicado: " + posicao);
+                intent.putExtra(CHAVE_CARTAO,cartao);
+                intent.putExtra(CHAVE_POSICAO, posicao);
                 startActivityForResult(intent, CHAVE_ALTERA);
             }
         });
@@ -93,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
             private void vaiParaActivityCadastrarCartao() {
                 Intent intent = new Intent(MainActivity.this, CadastrarCartaoActivity.class);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent,CODIGO_CADASTRAR);
             }
         });
     }
@@ -122,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     private void atualizaRecyclerViewAltera(@NotNull Intent data) {
         Cartao cartao = (Cartao) data.getSerializableExtra(CHAVE_CARTAO);
         int posicao = data.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
+        Log.i("cartão","posição recebida: "+ posicao);
         if (posicao > POSICAO_INVALIDA){
             adapterRecyclerView.editarCartao(cartao, posicao);
         }
@@ -140,15 +145,6 @@ public class MainActivity extends AppCompatActivity {
         Permissions permissions = new Permissions(MainActivity.this);
         permissions.checkPermissionForExternalStorage();
         permissions.requestPermissionForExternalStorage();
-    }
-
-    private void criarArquivoNoCelular(){
-        try {
-            ConexaoArquivo.createBufferedReader(NOME_ARQUIVO);
-            ConexaoArquivo.closeReader();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

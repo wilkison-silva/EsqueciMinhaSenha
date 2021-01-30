@@ -64,6 +64,10 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         this.notifyDataSetChanged();
     }
 
+    public Cartao getCartao(int posicao){
+        return list.get(posicao);
+    }
+
     public void editarCartao(Cartao cartao, int posicao){
         this.list.set(posicao, cartao);
         notifyDataSetChanged();

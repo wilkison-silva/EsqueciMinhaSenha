@@ -1,8 +1,16 @@
 package br.com.will.esqueciminhasenha.Model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity
 public class Cartao implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id = 0;
 
     private String senha;
     private String categoria;
@@ -16,6 +24,7 @@ public class Cartao implements Serializable {
 
     }
 
+    @Ignore
     public Cartao(String descricao, String categoria, String login, String senha, String corCartao, String corTexto) {
         this.senha = senha;
         this.categoria = categoria;
@@ -23,6 +32,14 @@ public class Cartao implements Serializable {
         this.descricao = descricao;
         this.corCartao = corCartao;
         this.corTexto = corTexto;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSenha() {

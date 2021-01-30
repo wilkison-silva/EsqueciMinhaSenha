@@ -55,6 +55,8 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     private String corTexto = null;
     private boolean novoCartao = true;
     private int posicao_adapterRecyclerView;
+    CartaoController cartaoController;
+    Cartao cartaoRecebido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +81,22 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         configuraButtonSalvar();
 
         checaSeExisteAlteracao();
+
+        cartaoController = new CartaoController(this);
     }
 
     private void checaSeExisteAlteracao() {
         Intent intent = getIntent();
-        if (intent.hasExtra(CHAVE_ALTERAR)) {
-            Cartao cartao = (Cartao) intent.getSerializableExtra(CHAVE_ALTERAR);
-            carregarInformacoesCartao(cartao);
+        if (intent.hasExtra(CHAVE_CARTAO)) {
+
+            cartaoRecebido = (Cartao) intent.getSerializableExtra(CHAVE_CARTAO);
+            Log.i("cartão", "cartão recebido: " + cartaoRecebido.getId() +  "-" + cartaoRecebido.getDescricao());
+            carregarInformacoesCartao(cartaoRecebido);
             novoCartao = false;
             posicao_adapterRecyclerView = intent.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
+        }
+        else{
+            Log.i("cartão", "Nada recebido");
         }
     }
 
@@ -141,44 +150,37 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         buttonCadastrarNovoCartao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
                     if (verificarPreenchimentoDosCampos() == true) {
-                        Cartao cartao = getDadosFormulario();
 
-                        CartaoController cartaoController = new CartaoController();
-                        if (novoCartao){
-                            cadastraNovoCartao(cartao, cartaoController);
-                        }
-                        else {
-                            alteraCartaoExistente(cartao, cartaoController);
+                        if (novoCartao) {
+                            Cartao cartao = getDadosFormulario();
+                            cadastraNovoCartao(cartao);
+                        } else {
+                            Cartao cartao = getDadosFormulario();
+                            cartao.setId(cartaoRecebido.getId());
+                            alteraCartaoExistente(cartao);
                         }
                     }
-                } catch (Exception e) {
-                    Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
-                }
             }
 
-            private void alteraCartaoExistente(Cartao cartao, CartaoController cartaoController) {
-                if(cartaoController.editar(cartao, posicao_adapterRecyclerView)){
-                    Toast.makeText(CadastrarCartaoActivity.this, R.string.cartao_alterado, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent();
-                    intent.putExtra(CHAVE_CARTAO, cartao);
-                    intent.putExtra(CHAVE_POSICAO, posicao_adapterRecyclerView);
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
-                }
+            private void alteraCartaoExistente(Cartao cartao) {
+                cartaoController.editar(cartao);
+                Toast.makeText(CadastrarCartaoActivity.this, R.string.cartao_alterado, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+                intent.putExtra(CHAVE_CARTAO, cartao);
+                intent.putExtra(CHAVE_POSICAO, posicao_adapterRecyclerView);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
 
-            private void cadastraNovoCartao(Cartao cartao, CartaoController cartaoController) {
-                if (cartaoController.cadastrar(cartao) && novoCartao) {
-                    Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent();
-                    intent.putExtra(CHAVE_CARTAO, cartao);
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
-                } else {
-                    Toast.makeText(CadastrarCartaoActivity.this, R.string.erro_ao_salvar, Toast.LENGTH_LONG).show();
-                }
+            private void cadastraNovoCartao(Cartao cartao) {
+                Log.i("cartão", "cartão salvar activity id: " + cartao.getId());
+                cartaoController.cadastrar(cartao);
+                Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+                intent.putExtra(CHAVE_CARTAO, cartao);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
     }
@@ -370,21 +372,21 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         });
     }
 
-    private void verificaCorCardView(String corCardView){
+    private void verificaCorCardView(String corCardView) {
 
-        if (corCardView.equals("#FF8C00")){
+        if (corCardView.equals("#FF8C00")) {
             configurarCorCardView(1);
-        } else  if (corCardView.equals("#FF8C00")) {
+        } else if (corCardView.equals("#8B0000")) {
             configurarCorCardView(2);
-        } else if (corCardView.equals("#1DE3AA")){
+        } else if (corCardView.equals("#1DE3AA")) {
             configurarCorCardView(3);
-        } else if (corCardView.equals("#70FFFF")){
+        } else if (corCardView.equals("#70FFFF")) {
             configurarCorCardView(4);
-        } else if (corCardView.equals("#FFDE16")){
+        } else if (corCardView.equals("#FFDE16")) {
             configurarCorCardView(5);
-        } else if (corCardView.equals("#FF1493")){
+        } else if (corCardView.equals("#FF1493")) {
             configurarCorCardView(6);
-        } else if (corCardView.equals("#4B0082")){
+        } else if (corCardView.equals("#4B0082")) {
             configurarCorCardView(7);
         }
     }

@@ -21,6 +21,7 @@
 
     <string-array name="linguagens">
         <item></item>
+        <item>Senha de app</item>
         <item>Site de compras</item>
         <item>Site de educação</item>
         <item>Trabalho</item>
