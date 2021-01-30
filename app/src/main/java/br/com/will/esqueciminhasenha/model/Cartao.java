@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.Model;
+package br.com.will.esqueciminhasenha.model;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;

@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.UI.Activity;
+package br.com.will.esqueciminhasenha.UI.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,13 +20,14 @@ import androidx.cardview.widget.CardView;
 
 import org.jetbrains.annotations.NotNull;
 
-import br.com.will.esqueciminhasenha.Controller.CartaoController;
-import br.com.will.esqueciminhasenha.Model.Cartao;
+import br.com.will.esqueciminhasenha.controller.CartaoController;
+import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.R;
 
-import static br.com.will.esqueciminhasenha.Interfaces.Constantes.CHAVE_CARTAO;
-import static br.com.will.esqueciminhasenha.Interfaces.Constantes.CHAVE_POSICAO;
-import static br.com.will.esqueciminhasenha.Interfaces.Constantes.POSICAO_INVALIDA;
+import static br.com.will.esqueciminhasenha.interfaces.Constantes.CHAVE_CARTAO;
+import static br.com.will.esqueciminhasenha.interfaces.Constantes.CHAVE_POSICAO;
+import static br.com.will.esqueciminhasenha.interfaces.Constantes.POSICAO_INVALIDA;
+
 
 public class CadastrarCartaoActivity extends AppCompatActivity {
 
@@ -50,6 +50,7 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
     private ImageButton imageButtonCorAmarelo;
     private ImageButton imageButtonCorRosa;
     private ImageButton imageButtonCorIndigo;
+    @SuppressWarnings("FieldCanBeLocal")
     private Button buttonCadastrarNovoCartao;
 
     private String corCartao = null;
@@ -150,7 +151,7 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         buttonCadastrarNovoCartao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (verificarPreenchimentoDosCampos() == true) {
+                if (verificarPreenchimentoDosCampos()) {
                     Cartao cartao = getDadosFormulario();
                     if (novoCartao) {
                         cadastraNovoCartao(cartao);
@@ -220,72 +221,37 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
 
     private void configuraImageButtonCorIndigo() {
         imageButtonCorIndigo = findViewById(R.id.imagebutton_cor_indigo);
-        imageButtonCorIndigo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(7);
-            }
-        });
+        imageButtonCorIndigo.setOnClickListener(v -> configurarCorCardView(7));
     }
 
     private void configuraImageButtonCorRosa() {
         imageButtonCorRosa = findViewById(R.id.imagebutton_cor_rosa);
-        imageButtonCorRosa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(6);
-            }
-        });
+        imageButtonCorRosa.setOnClickListener(v -> configurarCorCardView(6));
     }
 
     private void configuraImageButtonCorAmarelo() {
         imageButtonCorAmarelo = findViewById(R.id.imagebutton_cor_amarelo);
-        imageButtonCorAmarelo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(5);
-            }
-        });
+        imageButtonCorAmarelo.setOnClickListener(v -> configurarCorCardView(5));
     }
 
     private void configuraImageButtonCorCiano() {
         imageButtonCorCiano = findViewById(R.id.imagebutton_cor_ciano);
-        imageButtonCorCiano.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(4);
-            }
-        });
+        imageButtonCorCiano.setOnClickListener(v -> configurarCorCardView(4));
     }
 
     private void configuraImageButtonCorVerdeClaro() {
         imageButtonCorVerdeClaro = findViewById(R.id.imagebutton_Cor_verde_claro);
-        imageButtonCorVerdeClaro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(3);
-            }
-        });
+        imageButtonCorVerdeClaro.setOnClickListener(v -> configurarCorCardView(3));
     }
 
     private void configuraImageButtonCorVermelho() {
         imageButtonCorVermelho = findViewById(R.id.imagebutton_cor_vermelho);
-        imageButtonCorVermelho.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(2);
-            }
-        });
+        imageButtonCorVermelho.setOnClickListener(v -> configurarCorCardView(2));
     }
 
     private void configuraImageButtonCorLaranja() {
         imageButtonCorLaranja = findViewById(R.id.imagebutton_cor_laranja);
-        imageButtonCorLaranja.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                configurarCorCardView(1);
-            }
-        });
+        imageButtonCorLaranja.setOnClickListener(v -> configurarCorCardView(1));
     }
 
     private void configuraEditTextSenha() {
@@ -372,20 +338,28 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
 
     private void verificaCorCardView(String corCardView) {
 
-        if (corCardView.equals("#FF8C00")) {
-            configurarCorCardView(1);
-        } else if (corCardView.equals("#8B0000")) {
-            configurarCorCardView(2);
-        } else if (corCardView.equals("#1DE3AA")) {
-            configurarCorCardView(3);
-        } else if (corCardView.equals("#70FFFF")) {
-            configurarCorCardView(4);
-        } else if (corCardView.equals("#FFDE16")) {
-            configurarCorCardView(5);
-        } else if (corCardView.equals("#FF1493")) {
-            configurarCorCardView(6);
-        } else if (corCardView.equals("#4B0082")) {
-            configurarCorCardView(7);
+        switch (corCardView) {
+            case "#FF8C00":
+                configurarCorCardView(1);
+                break;
+            case "#8B0000":
+                configurarCorCardView(2);
+                break;
+            case "#1DE3AA":
+                configurarCorCardView(3);
+                break;
+            case "#70FFFF":
+                configurarCorCardView(4);
+                break;
+            case "#FFDE16":
+                configurarCorCardView(5);
+                break;
+            case "#FF1493":
+                configurarCorCardView(6);
+                break;
+            case "#4B0082":
+                configurarCorCardView(7);
+                break;
         }
     }
 
@@ -447,8 +421,4 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
         imageButtonCorIndigo.setImageResource(R.drawable.botao_nao_selecionado);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

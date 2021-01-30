@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.Database.DAO;
+package br.com.will.esqueciminhasenha.database.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -8,23 +8,23 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.Model.Cartao;
+import br.com.will.esqueciminhasenha.model.Cartao;
 
 @Dao
 public interface RoomCartaoDAO {
 
     @Insert
-    public abstract void salvar(Cartao cartao);
+    void salvar(Cartao cartao);
 
     @Update
-    public abstract void editar(Cartao cartao);
+    void editar(Cartao cartao);
 
     @Delete
-    public abstract void deletar(Cartao cartao);
+    void deletar(Cartao cartao);
 
     @Query("SELECT * FROM cartao")
-    public abstract List<Cartao> todos();
+    List<Cartao> todos();
 
     @Query("SELECT * FROM cartao ORDER BY id DESC LIMIT 1")
-    public abstract Cartao ultimoRegistro();
+    Cartao ultimoRegistro();
 }

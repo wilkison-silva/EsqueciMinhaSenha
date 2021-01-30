@@ -1,9 +1,8 @@
-package br.com.will.esqueciminhasenha.UI.Activity;
+package br.com.will.esqueciminhasenha.UI.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -19,21 +18,22 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.Adapter.AdapterRecyclerView;
-import br.com.will.esqueciminhasenha.Adapter.Listener.OnItemClickListener;
-import br.com.will.esqueciminhasenha.Controller.CartaoController;
-import br.com.will.esqueciminhasenha.ItemHelpers.CartaoItemTouchHelperCallback;
-import br.com.will.esqueciminhasenha.Model.Cartao;
+import br.com.will.esqueciminhasenha.adapter.AdapterRecyclerView;
+import br.com.will.esqueciminhasenha.adapter.listener.OnItemClickListener;
+import br.com.will.esqueciminhasenha.controller.CartaoController;
+import br.com.will.esqueciminhasenha.itemHelpers.CartaoItemTouchHelperCallback;
+import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.R;
-import br.com.will.esqueciminhasenha.Stream.Permissions;
 
-import static br.com.will.esqueciminhasenha.Interfaces.Constantes.*;
+import static br.com.will.esqueciminhasenha.interfaces.Constantes.*;
+
 
 
 public class MainActivity extends AppCompatActivity {
 
 
 
+    @SuppressWarnings("FieldCanBeLocal")
     private RecyclerView recyclerView;
     private AdapterRecyclerView adapterRecyclerView;
     private List<Cartao> cartaoList;
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        verificarPermissoes();
         desativarModoNoturno();
         configuraListaDeCartoes();
         configuraAdapterRecyclerView();
@@ -107,16 +106,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void verificaRequestDeAlteracao(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == CODIGO_ALTERAR) {
-            if(resultCode == Activity.RESULT_OK && data.hasExtra(CHAVE_CARTAO)) {
-                atualizaRecyclerViewAltera(data);
+            if(resultCode == Activity.RESULT_OK) {
+                assert data != null;
+                if (data.hasExtra(CHAVE_CARTAO)) {
+                    atualizaRecyclerViewAltera(data);
+                }
             }
         }
     }
 
     private void verificaRequestDeCadastro(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == CODIGO_CADASTRAR){
-            if(resultCode == RESULT_OK && data.hasExtra(CHAVE_CARTAO)){
-                atualizaRecyclerViewCadastra(data);
+            if(resultCode == RESULT_OK) {
+                assert data != null;
+                if (data.hasExtra(CHAVE_CARTAO)) {
+                    atualizaRecyclerViewCadastra(data);
+                }
             }
         }
     }
@@ -134,23 +139,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     private void desativarModoNoturno() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
-    private void verificarPermissoes() {
-        Permissions permissions = new Permissions(MainActivity.this);
-        permissions.checkPermissionForExternalStorage();
-        permissions.requestPermissionForExternalStorage();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

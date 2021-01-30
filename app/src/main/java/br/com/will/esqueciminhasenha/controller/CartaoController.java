@@ -1,16 +1,16 @@
-package br.com.will.esqueciminhasenha.Controller;
+package br.com.will.esqueciminhasenha.controller;
 
 import android.content.Context;
 
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.Database.CartaoDatabase;
-import br.com.will.esqueciminhasenha.Database.DAO.RoomCartaoDAO;
-import br.com.will.esqueciminhasenha.Model.Cartao;
+import br.com.will.esqueciminhasenha.database.CartaoDatabase;
+import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
+import br.com.will.esqueciminhasenha.model.Cartao;
 
 public class CartaoController {
 
-    RoomCartaoDAO roomCartaoDAO;
+    final RoomCartaoDAO roomCartaoDAO;
 
     public CartaoController(Context context) {
         roomCartaoDAO = CartaoDatabase.getInstance(context).getRoomCartaoDAO();

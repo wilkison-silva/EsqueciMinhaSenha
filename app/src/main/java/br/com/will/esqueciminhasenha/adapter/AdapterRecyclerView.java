@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.Adapter;
+package br.com.will.esqueciminhasenha.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,15 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Collections;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.Adapter.Listener.OnItemClickListener;
-import br.com.will.esqueciminhasenha.Model.Cartao;
+import br.com.will.esqueciminhasenha.adapter.listener.OnItemClickListener;
+import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.R;
 
 public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerView.CartaoViewHolder> {
 
 
-    private List<Cartao> list;
-    private Context context;
+    private final List<Cartao> list;
+    private final Context context;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -45,8 +45,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     public void onBindViewHolder(@NonNull CartaoViewHolder holder, int position) {
 
         Cartao cartao = this.list.get(position);
-        CartaoViewHolder cartaoViewHolder = holder;
-        cartaoViewHolder.vincularDados(cartao);
+        holder.vincularDados(cartao);
     }
 
     @Override
@@ -86,12 +85,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         public CartaoViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.OnItemClick(cartao, getAdapterPosition());
-                }
-            });
+            itemView.setOnClickListener(v -> onItemClickListener.OnItemClick(cartao, getAdapterPosition()));
 
         }
 

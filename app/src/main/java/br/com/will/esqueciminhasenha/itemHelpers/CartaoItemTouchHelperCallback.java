@@ -1,21 +1,22 @@
-package br.com.will.esqueciminhasenha.ItemHelpers;
+package br.com.will.esqueciminhasenha.itemHelpers;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import br.com.will.esqueciminhasenha.Adapter.AdapterRecyclerView;
-import br.com.will.esqueciminhasenha.Controller.CartaoController;
-import br.com.will.esqueciminhasenha.Model.Cartao;
+import br.com.will.esqueciminhasenha.adapter.AdapterRecyclerView;
+import br.com.will.esqueciminhasenha.controller.CartaoController;
+import br.com.will.esqueciminhasenha.model.Cartao;
+
 
 public class CartaoItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
-    private AdapterRecyclerView adapterRecyclerView;
+    private final AdapterRecyclerView adapterRecyclerView;
+    @SuppressWarnings("FieldCanBeLocal")
     private CartaoController cartaoController;
-    private Context context;
+    private final Context context;
 
     public CartaoItemTouchHelperCallback(AdapterRecyclerView adapterRecyclerView, Context context) {
         this.adapterRecyclerView = adapterRecyclerView;

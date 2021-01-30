@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.Database;
+package br.com.will.esqueciminhasenha.database;
 
 import android.content.Context;
 
@@ -6,8 +6,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import br.com.will.esqueciminhasenha.Database.DAO.RoomCartaoDAO;
-import br.com.will.esqueciminhasenha.Model.Cartao;
+import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
+import br.com.will.esqueciminhasenha.model.Cartao;
 
 @Database(entities = {Cartao.class}, version = 1, exportSchema = false)
 public abstract class CartaoDatabase extends RoomDatabase {
