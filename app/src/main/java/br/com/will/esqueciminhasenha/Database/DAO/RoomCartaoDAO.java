@@ -24,6 +24,7 @@ public interface RoomCartaoDAO {
 
     @Query("SELECT * FROM cartao")
     public abstract List<Cartao> todos();
+
     @Query("SELECT * FROM cartao ORDER BY id DESC LIMIT 1")
     public abstract Cartao ultimoRegistro();
 }

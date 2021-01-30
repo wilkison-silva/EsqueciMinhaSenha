@@ -1,6 +1,7 @@
 package br.com.will.esqueciminhasenha.ItemHelpers;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -39,8 +40,10 @@ public class CartaoItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int posicao = viewHolder.getAdapterPosition();
+        Log.i("cartão","cartão da lista a ser excluido: " + posicao);
         cartaoController = new CartaoController(context);
         Cartao cartao = adapterRecyclerView.getCartao(posicao);
+        Log.i("cartão","cartão do banco a ser excluido: " + cartao.getId());
         cartaoController.excluir(cartao);
         adapterRecyclerView.excluirCartao(posicao);
     }
