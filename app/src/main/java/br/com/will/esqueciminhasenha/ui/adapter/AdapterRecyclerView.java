@@ -21,7 +21,11 @@ import br.com.will.esqueciminhasenha.R;
 public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerView.CartaoViewHolder> {
 
 
-    private final List<Cartao> list;
+    public void setList(List<Cartao> list) {
+        this.list = list;
+    }
+
+    private List<Cartao> list;
     private final Context context;
     private OnItemClickListener onItemClickListener;
 
@@ -33,6 +37,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         this.list = list;
         this.context = context;
     }
+
 
     @NonNull
     @Override
@@ -75,6 +80,11 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     public void troca(int posicaoInicial, int posicaoFinal) {
         Collections.swap(this.list,posicaoInicial,posicaoFinal);
         notifyItemMoved(posicaoInicial, posicaoFinal);
+    }
+
+    public void atualizarLista(List<Cartao> resultadoBusca) {
+        this.setList(resultadoBusca);
+        notifyDataSetChanged();
     }
 
     class CartaoViewHolder extends RecyclerView.ViewHolder {

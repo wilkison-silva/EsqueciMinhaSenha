@@ -3,7 +3,11 @@ package br.com.will.esqueciminhasenha.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,12 +35,13 @@ import static br.com.will.esqueciminhasenha.interfaces.Constantes.*;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     @SuppressWarnings("FieldCanBeLocal")
     private RecyclerView recyclerView;
     private AdapterRecyclerView adapterRecyclerView;
     private List<Cartao> cartaoList;
+    private EditText editTextPesquisar;
+    private Button buttonPesquisar;
+    private List<Cartao> resultadoBusca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,43 @@ public class MainActivity extends AppCompatActivity {
         configuraAdapterRecyclerView();
         configuraRecyclerView();
         configurarFlotActionButtonAdicionar();
+
+        configuraComponentesDePesquisa();
+    }
+
+    private void configuraComponentesDePesquisa() {
+        editTextPesquisar = findViewById(R.id.edittext_pesquisar);
+        buttonPesquisar = findViewById(R.id.botao_pesquisar);
+        CartaoController cartaoController = new CartaoController(this);
+        buttonPesquisar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String descricao = editTextPesquisar.getText().toString();
+                resultadoBusca =  cartaoController.pesquisar(descricao, cartaoList);
+                adapterRecyclerView.atualizarLista(resultadoBusca);
+            }
+        });
+
+        editTextPesquisar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String descricao = editTextPesquisar.getText().toString();
+                if(descricao.equals("")){
+                    cartaoList = cartaoController.getListaDeCartoesSalvos();
+                    adapterRecyclerView.atualizarLista(cartaoList);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void configuraRecyclerView() {

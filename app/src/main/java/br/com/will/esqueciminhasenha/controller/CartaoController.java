@@ -1,7 +1,9 @@
 package br.com.will.esqueciminhasenha.controller;
 
 import android.content.Context;
+import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.will.esqueciminhasenha.database.CartaoDatabase;
@@ -34,5 +36,20 @@ public class CartaoController {
 
     public Cartao ultimoRegistro() {
         return roomCartaoDAO.ultimoRegistro();
+    }
+
+    public List<Cartao> pesquisar(String descricao, List<Cartao> list){
+        List<Cartao> resultado = new ArrayList<>();
+        if(descricao.equals("")){
+            resultado = list;
+        }
+        else{
+            for(int i = 0; i < list.size(); i++){
+                if(list.get(i).getDescricao().contains(descricao)){
+                    resultado.add(list.get(i));
+                }
+            }
+        }
+        return resultado;
     }
 }
