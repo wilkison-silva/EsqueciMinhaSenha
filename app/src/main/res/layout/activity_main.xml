@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".UI.activity.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
     <View
         android:id="@+id/view"

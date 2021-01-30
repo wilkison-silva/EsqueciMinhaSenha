@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.adapter;
+package br.com.will.esqueciminhasenha.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Collections;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.adapter.listener.OnItemClickListener;
+import br.com.will.esqueciminhasenha.ui.adapter.listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.R;
 

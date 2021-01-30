@@ -13,8 +13,8 @@
         android:theme="@style/Theme.EsqueciMinhaSenha"
         android:fullBackupContent="@xml/backup_descriptor"
         tools:ignore="AllowBackup">
-        <activity android:name=".UI.activity.CadastrarCartaoActivity" />
-        <activity android:name=".UI.activity.MainActivity">
+        <activity android:name=".ui.activity.CadastrarCartaoActivity" />
+        <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

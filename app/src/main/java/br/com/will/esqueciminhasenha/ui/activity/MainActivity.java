@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.UI.activity;
+package br.com.will.esqueciminhasenha.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,10 +18,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.adapter.AdapterRecyclerView;
-import br.com.will.esqueciminhasenha.adapter.listener.OnItemClickListener;
+import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
+import br.com.will.esqueciminhasenha.ui.adapter.listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.controller.CartaoController;
-import br.com.will.esqueciminhasenha.itemHelpers.CartaoItemTouchHelperCallback;
+import br.com.will.esqueciminhasenha.ui.itemHelpers.CartaoItemTouchHelperCallback;
 import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.R;
 

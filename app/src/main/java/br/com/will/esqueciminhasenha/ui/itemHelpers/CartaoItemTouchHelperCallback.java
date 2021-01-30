@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.itemHelpers;
+package br.com.will.esqueciminhasenha.ui.itemHelpers;
 
 import android.content.Context;
 
@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import br.com.will.esqueciminhasenha.adapter.AdapterRecyclerView;
+import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
 import br.com.will.esqueciminhasenha.controller.CartaoController;
 import br.com.will.esqueciminhasenha.model.Cartao;
 
