@@ -19,6 +19,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import org.jetbrains.annotations.NotNull;
+
 import br.com.will.esqueciminhasenha.Controller.CartaoController;
 import br.com.will.esqueciminhasenha.Model.Cartao;
 import br.com.will.esqueciminhasenha.R;
@@ -173,10 +175,11 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
                 finish();
             }
 
-            private void cadastraNovoCartao(Cartao cartao) {
+            private void cadastraNovoCartao(@NotNull Cartao cartao) {
                 Log.i("cartão", "cartão salvar activity id: " + cartao.getId());
                 cartaoController.cadastrar(cartao);
                 Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
+                cartao = cartaoController.ultimoRegistro();
                 Intent intent = new Intent();
                 intent.putExtra(CHAVE_CARTAO, cartao);
                 setResult(Activity.RESULT_OK, intent);

@@ -36,4 +36,7 @@ public class CartaoController {
         roomCartaoDAO.deletar(cartao);
     }
 
+    public Cartao ultimoRegistro() {
+        return roomCartaoDAO.ultimoRegistro();
+    }
 }
