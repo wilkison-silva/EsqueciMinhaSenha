@@ -9,6 +9,7 @@ import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoes;
 import br.com.will.esqueciminhasenha.asynctasks.BuscaUltimoRegistro;
 import br.com.will.esqueciminhasenha.asynctasks.CadastraCartao;
 import br.com.will.esqueciminhasenha.asynctasks.EditaCartao;
+import br.com.will.esqueciminhasenha.asynctasks.ExcluiCartao;
 import br.com.will.esqueciminhasenha.database.CartaoDatabase;
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.model.Cartao;
@@ -44,7 +45,8 @@ public class CartaoController {
     }
 
     public void excluir(Cartao cartao) {
-        roomCartaoDAO.deletar(cartao);
+        //roomCartaoDAO.deletar(cartao);
+        new ExcluiCartao(roomCartaoDAO, cartao).execute();
     }
 
     public List<Cartao> pesquisar(String descricao, List<Cartao> list) {
