@@ -22,13 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoesTask;
-import br.com.will.esqueciminhasenha.asynctasks.BuscaUltimoRegistroTask;
-import br.com.will.esqueciminhasenha.database.CartaoDatabase;
-import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
 import br.com.will.esqueciminhasenha.asynctasks.interfaces.BuscaTodosOsCartoesListener;
-import br.com.will.esqueciminhasenha.asynctasks.interfaces.BuscaUtimoCartaoListener;
 import br.com.will.esqueciminhasenha.ui.adapter.listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.controller.CartaoController;
 import br.com.will.esqueciminhasenha.ui.itemHelpers.CartaoItemTouchHelperCallback;
@@ -48,26 +43,22 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextPesquisar;
     private Button buttonPesquisar;
     private List<Cartao> resultadoBusca;
-    //private RoomCartaoDAO roomCartaoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //roomCartaoDAO = CartaoDatabase.getInstance(this).getRoomCartaoDAO();
         desativarModoNoturno();
         configuraListaDeCartoes();
         configuraAdapterRecyclerView();
         configuraRecyclerView();
         configurarFlotActionButtonAdicionar();
-        configuraComponentesDePesquisa();
+        configurandoBotaoDePesquisa();
+        configurandoEditTextDePesquisa();
     }
 
-
-
-    private void configuraComponentesDePesquisa() {
-        editTextPesquisar = findViewById(R.id.edittext_pesquisar);
+    private void configurandoBotaoDePesquisa() {
         buttonPesquisar = findViewById(R.id.botao_pesquisar);
         CartaoController cartaoController = new CartaoController(this);
         buttonPesquisar.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +69,12 @@ public class MainActivity extends AppCompatActivity {
                 adapterRecyclerView.atualizarLista(resultadoBusca);
             }
         });
+    }
 
+
+    private void configurandoEditTextDePesquisa() {
+        CartaoController cartaoController = new CartaoController(this);
+        editTextPesquisar = findViewById(R.id.edittext_pesquisar);
         editTextPesquisar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,8 +85,20 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String descricao = editTextPesquisar.getText().toString();
                 if(descricao.equals("")){
+
                     adapterRecyclerView.atualizarLista(listaCartoes);
+                    atualizaListaDeCartoes();
                 }
+            }
+
+            private void atualizaListaDeCartoes() {
+                cartaoController.getListaDeCartoesSalvos(new BuscaTodosOsCartoesListener() {
+                    @Override
+                    public void onTodosOsCartoes(List<Cartao> cartaoList) {
+                        listaCartoes = cartaoList;
+                        adapterRecyclerView.atualizarLista(cartaoList);
+                    }
+                });
             }
 
             @Override
@@ -164,11 +172,15 @@ public class MainActivity extends AppCompatActivity {
     private void verificaRequestDeCadastro(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == CODIGO_CADASTRAR){
             if(resultCode == Activity.RESULT_OK) {
-                assert data != null;
-                if (data.hasExtra(CHAVE_CARTAO)) {
-                    atualizaRecyclerViewCadastra(data);
-                }
+                verificaCartaoCadastrado(data);
             }
+        }
+    }
+
+    private void verificaCartaoCadastrado(@Nullable Intent data) {
+        assert data != null;
+        if (data.hasExtra(CHAVE_CARTAO)) {
+            atualizaRecyclerViewCadastra(data);
         }
     }
 
@@ -181,11 +193,15 @@ public class MainActivity extends AppCompatActivity {
     private void verificaRequestDeAlteracao(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == CODIGO_ALTERAR) {
             if(resultCode == Activity.RESULT_OK) {
-                assert data != null;
-                if (data.hasExtra(CHAVE_CARTAO)) {
-                    atualizaRecyclerViewAltera(data);
-                }
+                verificaCartaoAlterado(data);
             }
+        }
+    }
+
+    private void verificaCartaoAlterado(@Nullable Intent data) {
+        assert data != null;
+        if (data.hasExtra(CHAVE_CARTAO)) {
+            atualizaRecyclerViewAltera(data);
         }
     }
 

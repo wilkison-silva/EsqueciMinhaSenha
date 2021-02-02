@@ -38,8 +38,6 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         this.context = context;
     }
 
-
-
     @NonNull
     @Override
     public CartaoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -96,7 +94,12 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
         public CartaoViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
-            itemView.setOnClickListener(v -> onItemClickListener.OnItemClick(cartao, getAdapterPosition()));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.OnItemClick(cartao, CartaoViewHolder.this.getAdapterPosition());
+                }
+            });
 
         }
 
