@@ -48,14 +48,14 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextPesquisar;
     private Button buttonPesquisar;
     private List<Cartao> resultadoBusca;
-    private RoomCartaoDAO roomCartaoDAO;
+    //private RoomCartaoDAO roomCartaoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        roomCartaoDAO = CartaoDatabase.getInstance(this).getRoomCartaoDAO();
+        //roomCartaoDAO = CartaoDatabase.getInstance(this).getRoomCartaoDAO();
         desativarModoNoturno();
         configuraListaDeCartoes();
         configuraAdapterRecyclerView();
@@ -109,23 +109,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configuraListaDeCartoes() {
-
-        listaCartoes = new ArrayList<>();
-
-    }
-
-    private void configuraAdapterRecyclerView() {
         CartaoController cartaoController = new CartaoController(this);
+        listaCartoes = new ArrayList<>();
         adapterRecyclerView = new AdapterRecyclerView(listaCartoes, this);
-        cartaoController.getListaDeCartoesSalvos(adapterRecyclerView);
-
-        new BuscaTodosOsCartoesTask(roomCartaoDAO, new BuscaTodosOsCartoesListener() {
+        cartaoController.getListaDeCartoesSalvos(new BuscaTodosOsCartoesListener() {
             @Override
             public void onTodosOsCartoes(List<Cartao> cartaoList) {
                 listaCartoes = cartaoList;
+                adapterRecyclerView.atualizarLista(cartaoList);
             }
-        }).execute();
+        });
+    }
 
+    private void configuraAdapterRecyclerView() {
 
         adapterRecyclerView.setOnItemClickListener(new OnItemClickListener() {
             @Override

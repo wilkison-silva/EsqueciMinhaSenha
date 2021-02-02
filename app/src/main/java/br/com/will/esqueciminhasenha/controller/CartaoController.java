@@ -31,13 +31,17 @@ public class CartaoController {
         new CadastraCartaoTask(roomCartaoDAO, cartao, cadastraCartaoListener).execute();
     }
 
-    public void getListaDeCartoesSalvos(AdapterRecyclerView adapterRecyclerView) {
+    /*public void getListaDeCartoesSalvos(AdapterRecyclerView adapterRecyclerView) {
         new BuscaTodosOsCartoesTask(roomCartaoDAO, new BuscaTodosOsCartoesListener() {
             @Override
             public void onTodosOsCartoes(List<Cartao> cartaoList) {
                adapterRecyclerView.atualizarLista(cartaoList);
             }
         }).execute();
+    }*/
+
+    public void getListaDeCartoesSalvos(BuscaTodosOsCartoesListener buscaTodosOsCartoesListener) {
+        new BuscaTodosOsCartoesTask(roomCartaoDAO, buscaTodosOsCartoesListener).execute();
     }
 
     public void editar(Cartao cartao, EditaCartaoListener editaCartaoListener) {
