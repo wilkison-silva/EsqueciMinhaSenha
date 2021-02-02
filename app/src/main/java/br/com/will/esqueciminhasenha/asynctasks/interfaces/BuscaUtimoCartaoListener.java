@@ -1,4 +1,4 @@
-package br.com.will.esqueciminhasenha.ui.adapter.listener;
+package br.com.will.esqueciminhasenha.asynctasks.interfaces;
 
 import br.com.will.esqueciminhasenha.model.Cartao;
 

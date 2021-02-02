@@ -4,15 +4,14 @@ import android.os.AsyncTask;
 
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.model.Cartao;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaTodosOsCartoesListener;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaUtimoCartaoListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.BuscaUtimoCartaoListener;
 
-public class BuscaUltimoRegistro extends AsyncTask<Void, Void, Cartao> {
+public class BuscaUltimoRegistroTask extends AsyncTask<Void, Void, Cartao> {
 
     private RoomCartaoDAO roomCartaoDAO;
     private BuscaUtimoCartaoListener buscaUtimoCartaoListener;
 
-    public BuscaUltimoRegistro(RoomCartaoDAO roomCartaoDAO, BuscaUtimoCartaoListener buscaUtimoCartaoListener) {
+    public BuscaUltimoRegistroTask(RoomCartaoDAO roomCartaoDAO, BuscaUtimoCartaoListener buscaUtimoCartaoListener) {
         this.roomCartaoDAO = roomCartaoDAO;
         this.buscaUtimoCartaoListener = buscaUtimoCartaoListener;
     }

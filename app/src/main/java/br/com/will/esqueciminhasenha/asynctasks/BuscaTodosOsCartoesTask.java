@@ -6,14 +6,14 @@ import java.util.List;
 
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.model.Cartao;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaTodosOsCartoesListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.BuscaTodosOsCartoesListener;
 
-public class BuscaTodosOsCartoes extends AsyncTask <Void, Void, List<Cartao>> {
+public class BuscaTodosOsCartoesTask extends AsyncTask <Void, Void, List<Cartao>> {
 
     private RoomCartaoDAO roomCartaoDAO;
     private BuscaTodosOsCartoesListener buscaTodosOsCartoesListener;
 
-    public BuscaTodosOsCartoes(RoomCartaoDAO roomCartaoDAO, BuscaTodosOsCartoesListener buscaTodosOsCartoesListener) {
+    public BuscaTodosOsCartoesTask(RoomCartaoDAO roomCartaoDAO, BuscaTodosOsCartoesListener buscaTodosOsCartoesListener) {
         this.roomCartaoDAO = roomCartaoDAO;
         this.buscaTodosOsCartoesListener = buscaTodosOsCartoesListener;
     }

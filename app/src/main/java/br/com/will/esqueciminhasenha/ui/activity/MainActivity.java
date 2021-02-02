@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,13 +22,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoes;
-import br.com.will.esqueciminhasenha.asynctasks.BuscaUltimoRegistro;
+import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoesTask;
+import br.com.will.esqueciminhasenha.asynctasks.BuscaUltimoRegistroTask;
 import br.com.will.esqueciminhasenha.database.CartaoDatabase;
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaTodosOsCartoesListener;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaUtimoCartaoListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.BuscaTodosOsCartoesListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.BuscaUtimoCartaoListener;
 import br.com.will.esqueciminhasenha.ui.adapter.listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.controller.CartaoController;
 import br.com.will.esqueciminhasenha.ui.itemHelpers.CartaoItemTouchHelperCallback;
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         adapterRecyclerView = new AdapterRecyclerView(listaCartoes, this);
         cartaoController.getListaDeCartoesSalvos(adapterRecyclerView);
 
-        new BuscaTodosOsCartoes(roomCartaoDAO, new BuscaTodosOsCartoesListener() {
+        new BuscaTodosOsCartoesTask(roomCartaoDAO, new BuscaTodosOsCartoesListener() {
             @Override
             public void onTodosOsCartoes(List<Cartao> cartaoList) {
                 listaCartoes = cartaoList;
@@ -186,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void InserirUltimoRegistro() {
-        new BuscaUltimoRegistro(roomCartaoDAO, new BuscaUtimoCartaoListener() {
+        new BuscaUltimoRegistroTask(roomCartaoDAO, new BuscaUtimoCartaoListener() {
             @Override
             public void onBuscaUltimoCartao(Cartao cartao) {
                 adapterRecyclerView.adicionaNovoCartao(cartao);
