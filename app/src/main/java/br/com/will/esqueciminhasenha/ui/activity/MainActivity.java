@@ -63,17 +63,9 @@ public class MainActivity extends AppCompatActivity {
         configuraRecyclerView();
         configurarFlotActionButtonAdicionar();
         configuraComponentesDePesquisa();
-        //configuraInserirUltimoRegistro();
     }
 
-    private void InserirUltimoRegistro() {
-        new BuscaUltimoRegistro(roomCartaoDAO, new BuscaUtimoCartaoListener() {
-            @Override
-            public void onBuscaUltimoCartao(Cartao cartao) {
-                adapterRecyclerView.adicionaNovoCartao(cartao);
-            }
-        }).execute();
-    }
+
 
     private void configuraComponentesDePesquisa() {
         editTextPesquisar = findViewById(R.id.edittext_pesquisar);
@@ -188,19 +180,18 @@ public class MainActivity extends AppCompatActivity {
     private void verificaRequestDeCadastro(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == CODIGO_CADASTRAR){
             if(resultCode == Activity.RESULT_OK) {
-                /*assert data != null;
-                if (data.hasExtra(CHAVE_CARTAO)) {
-                    atualizaRecyclerViewCadastra(data);
-                }*/
-                Log.i("resultado", "aqui"   );
                 InserirUltimoRegistro();
             }
         }
     }
 
-    private void atualizaRecyclerViewCadastra(@NotNull Intent data) {
-        Cartao cartao = (Cartao) data.getSerializableExtra(CHAVE_CARTAO);
-        adapterRecyclerView.adicionaNovoCartao(cartao);
+    private void InserirUltimoRegistro() {
+        new BuscaUltimoRegistro(roomCartaoDAO, new BuscaUtimoCartaoListener() {
+            @Override
+            public void onBuscaUltimoCartao(Cartao cartao) {
+                adapterRecyclerView.adicionaNovoCartao(cartao);
+            }
+        }).execute();
     }
 
     private void atualizaRecyclerViewAltera(@NotNull Intent data) {

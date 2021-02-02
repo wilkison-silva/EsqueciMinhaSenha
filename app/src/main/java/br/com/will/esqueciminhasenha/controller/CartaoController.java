@@ -8,6 +8,7 @@ import java.util.List;
 import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoes;
 import br.com.will.esqueciminhasenha.asynctasks.BuscaUltimoRegistro;
 import br.com.will.esqueciminhasenha.asynctasks.CadastraCartao;
+import br.com.will.esqueciminhasenha.asynctasks.EditaCartao;
 import br.com.will.esqueciminhasenha.database.CartaoDatabase;
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.model.Cartao;
@@ -25,8 +26,6 @@ public class CartaoController {
     }
 
     public void cadastrar(Cartao cartao) {
-
-        //roomCartaoDAO.salvar(cartao);
         new CadastraCartao(roomCartaoDAO, cartao).execute();
     }
 
@@ -40,17 +39,12 @@ public class CartaoController {
     }
 
     public void editar(Cartao cartao) {
-        roomCartaoDAO.editar(cartao);
+        new EditaCartao(roomCartaoDAO, cartao).execute();
+
     }
 
     public void excluir(Cartao cartao) {
         roomCartaoDAO.deletar(cartao);
-    }
-
-    public Cartao ultimoRegistro() {
-
-        return  null;
-
     }
 
     public List<Cartao> pesquisar(String descricao, List<Cartao> list) {
