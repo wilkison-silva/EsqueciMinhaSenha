@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoes;
+import br.com.will.esqueciminhasenha.database.CartaoDatabase;
+import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
+import br.com.will.esqueciminhasenha.ui.adapter.listener.AsyncTaskListener;
 import br.com.will.esqueciminhasenha.ui.adapter.listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.controller.CartaoController;
 import br.com.will.esqueciminhasenha.ui.itemHelpers.CartaoItemTouchHelperCallback;
@@ -38,16 +43,18 @@ public class MainActivity extends AppCompatActivity {
     @SuppressWarnings("FieldCanBeLocal")
     private RecyclerView recyclerView;
     private AdapterRecyclerView adapterRecyclerView;
-    private List<Cartao> cartaoList;
+    private List<Cartao> listaCartoes;
     private EditText editTextPesquisar;
     private Button buttonPesquisar;
     private List<Cartao> resultadoBusca;
+    private RoomCartaoDAO roomCartaoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        roomCartaoDAO = CartaoDatabase.getInstance(this).getRoomCartaoDAO();
         desativarModoNoturno();
         configuraListaDeCartoes();
         configuraAdapterRecyclerView();
@@ -65,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String descricao = editTextPesquisar.getText().toString();
-                resultadoBusca =  cartaoController.pesquisar(descricao, cartaoList);
+                Log.i("tamanho", "tamanho da lista : " + listaCartoes.size());
+                resultadoBusca =  cartaoController.pesquisar(descricao, listaCartoes);
                 adapterRecyclerView.atualizarLista(resultadoBusca);
             }
         });
@@ -80,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String descricao = editTextPesquisar.getText().toString();
                 if(descricao.equals("")){
-                    cartaoList = cartaoController.getListaDeCartoesSalvos();
-                    adapterRecyclerView.atualizarLista(cartaoList);
+                    //cartaoController.getListaDeCartoesSalvos(adapterRecyclerView, new Asy);
+                    adapterRecyclerView.atualizarLista(listaCartoes);
                 }
             }
 
@@ -101,13 +109,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configuraListaDeCartoes() {
-        CartaoController cartaoController = new CartaoController(this);
-        cartaoList = new ArrayList<>();
-        cartaoList = cartaoController.getListaDeCartoesSalvos();
+
+        listaCartoes = new ArrayList<>();
+
     }
 
     private void configuraAdapterRecyclerView() {
-        adapterRecyclerView = new AdapterRecyclerView(cartaoList, this);
+        CartaoController cartaoController = new CartaoController(this);
+        adapterRecyclerView = new AdapterRecyclerView(listaCartoes, this);
+        cartaoController.getListaDeCartoesSalvos(adapterRecyclerView);
+
+        new BuscaTodosOsCartoes(roomCartaoDAO, new AsyncTaskListener() {
+            @Override
+            public void onTodosOsCartoes(List<Cartao> cartaoList) {
+                listaCartoes = cartaoList;
+            }
+        }).execute();
+
+
         adapterRecyclerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void OnItemClick(Cartao cartao, int posicao) {
@@ -183,6 +202,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void desativarModoNoturno() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+    private void atualizarRecyclerView(){
+
     }
 
 }

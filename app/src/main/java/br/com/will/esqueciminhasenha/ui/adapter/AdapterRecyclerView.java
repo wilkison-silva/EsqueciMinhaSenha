@@ -39,6 +39,7 @@ public class AdapterRecyclerView extends RecyclerView.Adapter<AdapterRecyclerVie
     }
 
 
+
     @NonNull
     @Override
     public CartaoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

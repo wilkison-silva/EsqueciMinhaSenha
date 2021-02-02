@@ -18,7 +18,6 @@ public abstract class CartaoDatabase extends RoomDatabase {
 
     public static CartaoDatabase getInstance(Context context) {
         return Room.databaseBuilder(context, CartaoDatabase.class, NOME_BANCO_DE_DADOS)
-                .allowMainThreadQueries()
                 .build();
     }
 }
