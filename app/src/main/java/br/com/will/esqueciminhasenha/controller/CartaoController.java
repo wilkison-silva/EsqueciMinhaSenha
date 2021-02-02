@@ -41,11 +41,9 @@ public class CartaoController {
 
     public void editar(Cartao cartao) {
         new EditaCartao(roomCartaoDAO, cartao).execute();
-
     }
 
     public void excluir(Cartao cartao) {
-        //roomCartaoDAO.deletar(cartao);
         new ExcluiCartao(roomCartaoDAO, cartao).execute();
     }
 
