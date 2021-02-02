@@ -176,10 +176,11 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             private void cadastraNovoCartao(@NotNull Cartao cartao) {
                 cartaoController.cadastrar(cartao, new CadastraCartaoListener() {
                     @Override
-                    public void cadastroFinalizado() {
+                    public void cadastroFinalizado(Cartao cartaoRetornado) {
                         Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent();
                         setResult(Activity.RESULT_OK, intent);
+                        intent.putExtra(CHAVE_CARTAO, cartaoRetornado);
 
                         finish();
                     }

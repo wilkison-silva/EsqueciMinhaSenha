@@ -2,6 +2,7 @@ package br.com.will.esqueciminhasenha.asynctasks;
 
 import android.os.AsyncTask;
 
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.BuscaUtimoCartaoListener;
 import br.com.will.esqueciminhasenha.asynctasks.interfaces.CadastraCartaoListener;
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.model.Cartao;
@@ -28,6 +29,11 @@ public class CadastraCartaoTask extends AsyncTask <Void, Void, Cartao> {
     @Override
     protected void onPostExecute(Cartao cartao) {
         super.onPostExecute(cartao);
-        cadastraCartaoListener.cadastroFinalizado();
+        new BuscaUltimoRegistroTask(roomCartaoDAO, new BuscaUtimoCartaoListener() {
+            @Override
+            public void onBuscaUltimoCartao(Cartao cartao) {
+                cadastraCartaoListener.cadastroFinalizado(cartao);
+            }
+        }).execute();
     }
 }
