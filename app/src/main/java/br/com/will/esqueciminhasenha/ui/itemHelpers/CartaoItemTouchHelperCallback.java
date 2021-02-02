@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.ExcluiCartaoListener;
 import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
 import br.com.will.esqueciminhasenha.controller.CartaoController;
 import br.com.will.esqueciminhasenha.model.Cartao;
@@ -44,8 +45,11 @@ public class CartaoItemTouchHelperCallback extends ItemTouchHelper.Callback {
         Cartao cartao = adapterRecyclerView.getCartao(posicao);
 
         cartaoController = new CartaoController(context);
-        cartaoController.excluir(cartao);
-
-        adapterRecyclerView.excluirCartao(posicao);
+        cartaoController.excluir(cartao, new ExcluiCartaoListener() {
+            @Override
+            public void excluirCartaoFinalizado() {
+                adapterRecyclerView.excluirCartao(posicao);
+            }
+        });
     }
 }

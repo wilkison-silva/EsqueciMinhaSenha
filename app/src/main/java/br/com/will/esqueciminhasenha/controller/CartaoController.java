@@ -11,6 +11,7 @@ import br.com.will.esqueciminhasenha.asynctasks.EditaCartaoTask;
 import br.com.will.esqueciminhasenha.asynctasks.ExcluiCartaoTask;
 import br.com.will.esqueciminhasenha.asynctasks.interfaces.CadastraCartaoListener;
 import br.com.will.esqueciminhasenha.asynctasks.interfaces.EditaCartaoListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.ExcluiCartaoListener;
 import br.com.will.esqueciminhasenha.database.CartaoDatabase;
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.model.Cartao;
@@ -43,8 +44,8 @@ public class CartaoController {
         new EditaCartaoTask(roomCartaoDAO, cartao, editaCartaoListener).execute();
     }
 
-    public void excluir(Cartao cartao) {
-        new ExcluiCartaoTask(roomCartaoDAO, cartao).execute();
+    public void excluir(Cartao cartao, ExcluiCartaoListener excluiCartaoListener) {
+        new ExcluiCartaoTask(roomCartaoDAO, cartao, excluiCartaoListener).execute();
     }
 
     public List<Cartao> pesquisar(String descricao, List<Cartao> list) {
