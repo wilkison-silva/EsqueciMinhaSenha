@@ -10,6 +10,7 @@ import br.com.will.esqueciminhasenha.asynctasks.CadastraCartaoTask;
 import br.com.will.esqueciminhasenha.asynctasks.EditaCartaoTask;
 import br.com.will.esqueciminhasenha.asynctasks.ExcluiCartaoTask;
 import br.com.will.esqueciminhasenha.asynctasks.interfaces.CadastraCartaoListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.EditaCartaoListener;
 import br.com.will.esqueciminhasenha.database.CartaoDatabase;
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.model.Cartao;
@@ -38,8 +39,8 @@ public class CartaoController {
         }).execute();
     }
 
-    public void editar(Cartao cartao) {
-        new EditaCartaoTask(roomCartaoDAO, cartao).execute();
+    public void editar(Cartao cartao, EditaCartaoListener editaCartaoListener) {
+        new EditaCartaoTask(roomCartaoDAO, cartao, editaCartaoListener).execute();
     }
 
     public void excluir(Cartao cartao) {
