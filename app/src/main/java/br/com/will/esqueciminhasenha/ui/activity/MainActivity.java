@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,13 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoes;
-import br.com.will.esqueciminhasenha.asynctasks.BuscaUltimoRegistro;
-import br.com.will.esqueciminhasenha.database.CartaoDatabase;
-import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaTodosOsCartoesListener;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaUtimoCartaoListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.BuscaTodosOsCartoesListener;
 import br.com.will.esqueciminhasenha.ui.adapter.listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.controller.CartaoController;
 import br.com.will.esqueciminhasenha.ui.itemHelpers.CartaoItemTouchHelperCallback;
@@ -49,26 +43,22 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextPesquisar;
     private Button buttonPesquisar;
     private List<Cartao> resultadoBusca;
-    private RoomCartaoDAO roomCartaoDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        roomCartaoDAO = CartaoDatabase.getInstance(this).getRoomCartaoDAO();
         desativarModoNoturno();
         configuraListaDeCartoes();
         configuraAdapterRecyclerView();
         configuraRecyclerView();
         configurarFlotActionButtonAdicionar();
-        configuraComponentesDePesquisa();
+        configurandoBotaoDePesquisa();
+        configurandoEditTextDePesquisa();
     }
 
-
-
-    private void configuraComponentesDePesquisa() {
-        editTextPesquisar = findViewById(R.id.edittext_pesquisar);
+    private void configurandoBotaoDePesquisa() {
         buttonPesquisar = findViewById(R.id.botao_pesquisar);
         CartaoController cartaoController = new CartaoController(this);
         buttonPesquisar.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +69,12 @@ public class MainActivity extends AppCompatActivity {
                 adapterRecyclerView.atualizarLista(resultadoBusca);
             }
         });
+    }
 
+
+    private void configurandoEditTextDePesquisa() {
+        CartaoController cartaoController = new CartaoController(this);
+        editTextPesquisar = findViewById(R.id.edittext_pesquisar);
         editTextPesquisar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -90,8 +85,20 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String descricao = editTextPesquisar.getText().toString();
                 if(descricao.equals("")){
+
                     adapterRecyclerView.atualizarLista(listaCartoes);
+                    atualizaListaDeCartoes();
                 }
+            }
+
+            private void atualizaListaDeCartoes() {
+                cartaoController.getListaDeCartoesSalvos(new BuscaTodosOsCartoesListener() {
+                    @Override
+                    public void onTodosOsCartoes(List<Cartao> cartaoList) {
+                        listaCartoes = cartaoList;
+                        adapterRecyclerView.atualizarLista(cartaoList);
+                    }
+                });
             }
 
             @Override
@@ -110,23 +117,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configuraListaDeCartoes() {
-
-        listaCartoes = new ArrayList<>();
-
-    }
-
-    private void configuraAdapterRecyclerView() {
         CartaoController cartaoController = new CartaoController(this);
+        listaCartoes = new ArrayList<>();
         adapterRecyclerView = new AdapterRecyclerView(listaCartoes, this);
-        cartaoController.getListaDeCartoesSalvos(adapterRecyclerView);
-
-        new BuscaTodosOsCartoes(roomCartaoDAO, new BuscaTodosOsCartoesListener() {
+        cartaoController.getListaDeCartoesSalvos(new BuscaTodosOsCartoesListener() {
             @Override
             public void onTodosOsCartoes(List<Cartao> cartaoList) {
                 listaCartoes = cartaoList;
+                adapterRecyclerView.atualizarLista(cartaoList);
             }
-        }).execute();
+        });
+    }
 
+    private void configuraAdapterRecyclerView() {
 
         adapterRecyclerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -166,32 +169,40 @@ public class MainActivity extends AppCompatActivity {
         verificaRequestDeAlteracao(requestCode, resultCode, data);
     }
 
-    private void verificaRequestDeAlteracao(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == CODIGO_ALTERAR) {
-            if(resultCode == Activity.RESULT_OK) {
-                assert data != null;
-                if (data.hasExtra(CHAVE_CARTAO)) {
-                    atualizaRecyclerViewAltera(data);
-                }
-            }
-        }
-    }
-
     private void verificaRequestDeCadastro(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == CODIGO_CADASTRAR){
             if(resultCode == Activity.RESULT_OK) {
-                InserirUltimoRegistro();
+                verificaCartaoCadastrado(data);
             }
         }
     }
 
-    private void InserirUltimoRegistro() {
-        new BuscaUltimoRegistro(roomCartaoDAO, new BuscaUtimoCartaoListener() {
-            @Override
-            public void onBuscaUltimoCartao(Cartao cartao) {
-                adapterRecyclerView.adicionaNovoCartao(cartao);
+    private void verificaCartaoCadastrado(@Nullable Intent data) {
+        assert data != null;
+        if (data.hasExtra(CHAVE_CARTAO)) {
+            atualizaRecyclerViewCadastra(data);
+        }
+    }
+
+    private void atualizaRecyclerViewCadastra(Intent data) {
+        Cartao cartao = (Cartao) data.getSerializableExtra(CHAVE_CARTAO);
+        adapterRecyclerView.adicionaNovoCartao(cartao);
+
+    }
+
+    private void verificaRequestDeAlteracao(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == CODIGO_ALTERAR) {
+            if(resultCode == Activity.RESULT_OK) {
+                verificaCartaoAlterado(data);
             }
-        }).execute();
+        }
+    }
+
+    private void verificaCartaoAlterado(@Nullable Intent data) {
+        assert data != null;
+        if (data.hasExtra(CHAVE_CARTAO)) {
+            atualizaRecyclerViewAltera(data);
+        }
     }
 
     private void atualizaRecyclerViewAltera(@NotNull Intent data) {

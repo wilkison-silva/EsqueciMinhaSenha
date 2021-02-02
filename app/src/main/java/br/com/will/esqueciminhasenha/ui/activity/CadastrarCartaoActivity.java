@@ -20,6 +20,8 @@ import androidx.cardview.widget.CardView;
 
 import org.jetbrains.annotations.NotNull;
 
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.CadastraCartaoListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.EditaCartaoListener;
 import br.com.will.esqueciminhasenha.controller.CartaoController;
 import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.R;
@@ -163,21 +165,32 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             }
 
             private void alteraCartaoExistente(Cartao cartao) {
-                cartaoController.editar(cartao);
-                Toast.makeText(CadastrarCartaoActivity.this, R.string.cartao_alterado, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                intent.putExtra(CHAVE_CARTAO, cartao);
-                intent.putExtra(CHAVE_POSICAO, posicao_adapterRecyclerView);
-                setResult(Activity.RESULT_OK, intent);
-                finish();
+                cartaoController.editar(cartao, new EditaCartaoListener() {
+                    @Override
+                    public void edicaoFinalizada() {
+                        Toast.makeText(CadastrarCartaoActivity.this, R.string.cartao_alterado, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent();
+                        intent.putExtra(CHAVE_CARTAO, cartao);
+                        intent.putExtra(CHAVE_POSICAO, posicao_adapterRecyclerView);
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
+                    }
+                });
+
             }
 
             private void cadastraNovoCartao(@NotNull Cartao cartao) {
-                cartaoController.cadastrar(cartao);
-                Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                setResult(Activity.RESULT_OK, intent);
-                finish();
+                cartaoController.cadastrar(cartao, new CadastraCartaoListener() {
+                    @Override
+                    public void cadastroFinalizado(Cartao cartaoRetornado) {
+                        Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent();
+                        setResult(Activity.RESULT_OK, intent);
+                        intent.putExtra(CHAVE_CARTAO, cartaoRetornado);
+
+                        finish();
+                    }
+                });
             }
         });
     }

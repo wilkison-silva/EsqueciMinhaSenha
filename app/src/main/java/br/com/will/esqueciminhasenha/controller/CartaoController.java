@@ -5,17 +5,18 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoes;
-import br.com.will.esqueciminhasenha.asynctasks.BuscaUltimoRegistro;
-import br.com.will.esqueciminhasenha.asynctasks.CadastraCartao;
-import br.com.will.esqueciminhasenha.asynctasks.EditaCartao;
-import br.com.will.esqueciminhasenha.asynctasks.ExcluiCartao;
+import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoesTask;
+import br.com.will.esqueciminhasenha.asynctasks.CadastraCartaoTask;
+import br.com.will.esqueciminhasenha.asynctasks.EditaCartaoTask;
+import br.com.will.esqueciminhasenha.asynctasks.ExcluiCartaoTask;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.CadastraCartaoListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.EditaCartaoListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.ExcluiCartaoListener;
 import br.com.will.esqueciminhasenha.database.CartaoDatabase;
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaTodosOsCartoesListener;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaUtimoCartaoListener;
+import br.com.will.esqueciminhasenha.asynctasks.interfaces.BuscaTodosOsCartoesListener;
 
 public class CartaoController {
 
@@ -26,25 +27,20 @@ public class CartaoController {
         roomCartaoDAO = CartaoDatabase.getInstance(context).getRoomCartaoDAO();
     }
 
-    public void cadastrar(Cartao cartao) {
-        new CadastraCartao(roomCartaoDAO, cartao).execute();
+    public void cadastrar(Cartao cartao, CadastraCartaoListener cadastraCartaoListener) {
+        new CadastraCartaoTask(roomCartaoDAO, cartao, cadastraCartaoListener).execute();
     }
 
-    public void getListaDeCartoesSalvos(AdapterRecyclerView adapterRecyclerView) {
-        new BuscaTodosOsCartoes(roomCartaoDAO, new BuscaTodosOsCartoesListener() {
-            @Override
-            public void onTodosOsCartoes(List<Cartao> cartaoList) {
-               adapterRecyclerView.atualizarLista(cartaoList);
-            }
-        }).execute();
+    public void getListaDeCartoesSalvos(BuscaTodosOsCartoesListener buscaTodosOsCartoesListener) {
+        new BuscaTodosOsCartoesTask(roomCartaoDAO, buscaTodosOsCartoesListener).execute();
     }
 
-    public void editar(Cartao cartao) {
-        new EditaCartao(roomCartaoDAO, cartao).execute();
+    public void editar(Cartao cartao, EditaCartaoListener editaCartaoListener) {
+        new EditaCartaoTask(roomCartaoDAO, cartao, editaCartaoListener).execute();
     }
 
-    public void excluir(Cartao cartao) {
-        new ExcluiCartao(roomCartaoDAO, cartao).execute();
+    public void excluir(Cartao cartao, ExcluiCartaoListener excluiCartaoListener) {
+        new ExcluiCartaoTask(roomCartaoDAO, cartao, excluiCartaoListener).execute();
     }
 
     public List<Cartao> pesquisar(String descricao, List<Cartao> list) {
