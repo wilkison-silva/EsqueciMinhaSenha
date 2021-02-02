@@ -175,7 +175,7 @@ public class CadastrarCartaoActivity extends AppCompatActivity {
             private void cadastraNovoCartao(@NotNull Cartao cartao) {
                 cartaoController.cadastrar(cartao);
                 Toast.makeText(CadastrarCartaoActivity.this, R.string.mensagem_cartao_salvo, Toast.LENGTH_LONG).show();
-                cartao = cartaoController.ultimoRegistro();
+                //cartao = cartaoController.ultimoRegistro();
                 Intent intent = new Intent();
                 intent.putExtra(CHAVE_CARTAO, cartao);
                 setResult(Activity.RESULT_OK, intent);

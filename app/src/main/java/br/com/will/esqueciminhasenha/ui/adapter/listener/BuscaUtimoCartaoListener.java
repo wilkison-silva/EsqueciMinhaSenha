@@ -1,11 +1,8 @@
 package br.com.will.esqueciminhasenha.ui.adapter.listener;
 
-import java.util.List;
-
 import br.com.will.esqueciminhasenha.model.Cartao;
 
-public interface AsyncTaskListener {
+public interface BuscaUtimoCartaoListener {
 
-    void onTodosOsCartoes(List<Cartao> cartaoList);
-
+    void onBuscaUltimoCartao(Cartao cartao);
 }

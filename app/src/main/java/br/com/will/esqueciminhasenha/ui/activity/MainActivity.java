@@ -24,10 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoes;
+import br.com.will.esqueciminhasenha.asynctasks.BuscaUltimoRegistro;
 import br.com.will.esqueciminhasenha.database.CartaoDatabase;
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.AsyncTaskListener;
+import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaTodosOsCartoesListener;
+import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaUtimoCartaoListener;
 import br.com.will.esqueciminhasenha.ui.adapter.listener.OnItemClickListener;
 import br.com.will.esqueciminhasenha.controller.CartaoController;
 import br.com.will.esqueciminhasenha.ui.itemHelpers.CartaoItemTouchHelperCallback;
@@ -60,8 +62,17 @@ public class MainActivity extends AppCompatActivity {
         configuraAdapterRecyclerView();
         configuraRecyclerView();
         configurarFlotActionButtonAdicionar();
-
         configuraComponentesDePesquisa();
+        //configuraInserirUltimoRegistro();
+    }
+
+    private void InserirUltimoRegistro() {
+        new BuscaUltimoRegistro(roomCartaoDAO, new BuscaUtimoCartaoListener() {
+            @Override
+            public void onBuscaUltimoCartao(Cartao cartao) {
+                adapterRecyclerView.adicionaNovoCartao(cartao);
+            }
+        }).execute();
     }
 
     private void configuraComponentesDePesquisa() {
@@ -72,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String descricao = editTextPesquisar.getText().toString();
-                Log.i("tamanho", "tamanho da lista : " + listaCartoes.size());
                 resultadoBusca =  cartaoController.pesquisar(descricao, listaCartoes);
                 adapterRecyclerView.atualizarLista(resultadoBusca);
             }
@@ -88,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String descricao = editTextPesquisar.getText().toString();
                 if(descricao.equals("")){
-                    //cartaoController.getListaDeCartoesSalvos(adapterRecyclerView, new Asy);
                     adapterRecyclerView.atualizarLista(listaCartoes);
                 }
             }
@@ -119,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         adapterRecyclerView = new AdapterRecyclerView(listaCartoes, this);
         cartaoController.getListaDeCartoesSalvos(adapterRecyclerView);
 
-        new BuscaTodosOsCartoes(roomCartaoDAO, new AsyncTaskListener() {
+        new BuscaTodosOsCartoes(roomCartaoDAO, new BuscaTodosOsCartoesListener() {
             @Override
             public void onTodosOsCartoes(List<Cartao> cartaoList) {
                 listaCartoes = cartaoList;
@@ -178,11 +187,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void verificaRequestDeCadastro(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode == CODIGO_CADASTRAR){
-            if(resultCode == RESULT_OK) {
-                assert data != null;
+            if(resultCode == Activity.RESULT_OK) {
+                /*assert data != null;
                 if (data.hasExtra(CHAVE_CARTAO)) {
                     atualizaRecyclerViewCadastra(data);
-                }
+                }*/
+                Log.i("resultado", "aqui"   );
+                InserirUltimoRegistro();
             }
         }
     }
@@ -203,9 +214,4 @@ public class MainActivity extends AppCompatActivity {
     private void desativarModoNoturno() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
-
-    private void atualizarRecyclerView(){
-
-    }
-
 }

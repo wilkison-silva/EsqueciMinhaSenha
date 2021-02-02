@@ -4,14 +4,16 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 import br.com.will.esqueciminhasenha.asynctasks.BuscaTodosOsCartoes;
+import br.com.will.esqueciminhasenha.asynctasks.BuscaUltimoRegistro;
+import br.com.will.esqueciminhasenha.asynctasks.CadastraCartao;
 import br.com.will.esqueciminhasenha.database.CartaoDatabase;
 import br.com.will.esqueciminhasenha.database.dao.RoomCartaoDAO;
 import br.com.will.esqueciminhasenha.model.Cartao;
 import br.com.will.esqueciminhasenha.ui.adapter.AdapterRecyclerView;
-import br.com.will.esqueciminhasenha.ui.adapter.listener.AsyncTaskListener;
+import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaTodosOsCartoesListener;
+import br.com.will.esqueciminhasenha.ui.adapter.listener.BuscaUtimoCartaoListener;
 
 public class CartaoController {
 
@@ -23,14 +25,16 @@ public class CartaoController {
     }
 
     public void cadastrar(Cartao cartao) {
-        roomCartaoDAO.salvar(cartao);
+
+        //roomCartaoDAO.salvar(cartao);
+        new CadastraCartao(roomCartaoDAO, cartao).execute();
     }
 
     public void getListaDeCartoesSalvos(AdapterRecyclerView adapterRecyclerView) {
-        new BuscaTodosOsCartoes(roomCartaoDAO, new AsyncTaskListener() {
+        new BuscaTodosOsCartoes(roomCartaoDAO, new BuscaTodosOsCartoesListener() {
             @Override
             public void onTodosOsCartoes(List<Cartao> cartaoList) {
-                adapterRecyclerView.atualizarLista(cartaoList);
+               adapterRecyclerView.atualizarLista(cartaoList);
             }
         }).execute();
     }
@@ -44,7 +48,9 @@ public class CartaoController {
     }
 
     public Cartao ultimoRegistro() {
-        return roomCartaoDAO.ultimoRegistro();
+
+        return  null;
+
     }
 
     public List<Cartao> pesquisar(String descricao, List<Cartao> list) {
@@ -62,3 +68,7 @@ public class CartaoController {
     }
 
 }
+
+
+
+
